@@ -8,16 +8,9 @@ module.exports = {
             case "gay" :
                 regularCommands.gay(message);
                 break;
-            case "recent" :
-                var user = args[1];
-                if(user == null) break;
-                var i;
-                user = user + " ";
-                for(i=2; i<args.length; i++){
-                    user = user + args[i] + " ";
-                }
-                regularCommands.recent(message, user);
-                break;
+            case "osu" :
+                var osuArgs = args.filter(param => !(param === "osu"));
+                regularCommands.osu(message, osuArgs);
 
         }
     },
