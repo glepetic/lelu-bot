@@ -1,12 +1,16 @@
 var Discord = require("discord.js");
 var osu = require("osu-api");
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var request = require("request");
 module.exports = {
     osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3", {
     notFoundAsError : true,
     completeScores : true
   }),
   client : new Discord.Client(),
-  discord : Discord
+  discord : Discord,
+  XMLHR : XMLHttpRequest,
+  request : request
 }
 var bot = require("./bot.js");
 // bot.osuApi.setMode(bot.osuApi.Modes.osu);
