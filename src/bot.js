@@ -10,7 +10,7 @@ module.exports = {
 }
 var bot = require("./bot.js");
 // bot.osuApi.setMode(bot.osuApi.Modes.osu);
-var config = require("./settings/config.json");
+var config = require(".././settings/config.json");
 var commandsHandler = require("./commandsHandler.js");
 var nonCommandsHandler = require("./nonCommandsHandler.js");
 

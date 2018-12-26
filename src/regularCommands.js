@@ -18,8 +18,6 @@ module.exports = {
                     return;
                 }
 
-                //message.channel.send("https://assets.ppy.sh/beatmaps/" + recentScores[0]["beatmap_id"] + "/covers/cover.jpg\n");
-
                 osuApi.getBeatmap(recentScores[0]["beatmap_id"],
                     function(err, beatMap){
 
