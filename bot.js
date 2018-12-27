@@ -2,23 +2,40 @@ var Discord = require("discord.js");
 var osu = require("osu-api");
 var request = require("request");
 var big = require("big.js");
-//var ffmpeg = require("ffmpeg");
+var MongoClient = require("mongodb").MongoClient;
+var assert = require("assert");
 module.exports = {
     osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3", {
     notFoundAsError : true,
     completeScores : true
   }),
+  mongoClient : new MongoClient("mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/", { useNewUrlParser: true }),
   client : new Discord.Client(),
   discord : Discord,
   request : request,
   bigNumbers : big,
   appRoot : __dirname
 }
+
 var bot = require("./bot.js");
-// bot.osuApi.setMode(bot.osuApi.Modes.osu);
 var config = require("./settings/config.json");
 var commandsHandler = require("./src/commandsHandler.js");
 var nonCommandsHandler = require("./src/nonCommandsHandler.js");
+
+bot.mongoClient.connect(function(err){
+	console.error(err);
+	console.log("Connected succesfully to server");
+	
+	var osudb = bot.mongoClient.db("osu");
+	var osuUserRegister = osudb.collection("user-register");
+	osuUserRegister.insertOne({osu : "xHix", discord: "500036526546223106"},
+		function(err, result){
+			//do something
+		});
+	bot.mongoClient.close();
+	
+	
+});
 
 // Set the prefix
 var prefix = config.prefix;
