@@ -1,6 +1,8 @@
 var Discord = require("discord.js");
 var osu = require("osu-api");
 var request = require("request");
+var big = require("big.js");
+//var ffmpeg = require("ffmpeg");
 module.exports = {
     osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3", {
     notFoundAsError : true,
@@ -8,7 +10,9 @@ module.exports = {
   }),
   client : new Discord.Client(),
   discord : Discord,
-  request : request
+  request : request,
+  bigNumbers : big
+ // media : ffmpeg
 }
 var bot = require("./bot.js");
 // bot.osuApi.setMode(bot.osuApi.Modes.osu);
@@ -44,10 +48,12 @@ bot.client.on("message", (message) => {
 
     var memRoles = message.member.roles;
 
-    //104324169 is the id of the admin permissions
     if(memRoles.some(role => role.hasPermission("ADMINISTRATOR"))){
       commandsHandler.executeAdminCommand(message, args);
+	  return;
     }
+	
+	message.channel.send("You are not an admin");
 
     }
 

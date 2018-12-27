@@ -5,8 +5,11 @@
   "main": "bot.js",
   "author": "Gonzalo Lepetic",
   "dependencies": {
+    "big.js": "^5.2.2",
     "bufferutil": "^4.0.0",
     "discord.js": "^11.4.2",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^4.0.0",
     "jsonplaceholder": "^0.3.3",
     "libsodium-wrappers": "^0.7.3",
     "module-js": "^7.0.1",

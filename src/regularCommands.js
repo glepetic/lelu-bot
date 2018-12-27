@@ -2,6 +2,17 @@ var bot = require("./bot.js");
 var osuCommands = require("./osu/osuCommands.js");
 
 module.exports = {
+	worms : function(message){
+				if(message.member == null) return;
+		var voiceChannel = message.member.voiceChannel;
+		if(voiceChannel  == null) return;
+		voiceChannel.join().then(connection => {
+			var dispatcher = connection.playFile("./public/audio/me muero.mp3");
+			dispatcher.on("end", end => {
+				voiceChannel.leave();
+			});
+		}).catch(console.error);
+	},
     gay : function(message){
         var mentionedPeople = message.mentions.users;
         if(mentionedPeople.first() == null) return;
