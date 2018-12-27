@@ -9,7 +9,7 @@ module.exports = {
 
     calculateTimeSincePlay : function(date){
         var now = new Date();
-        now.setHours(now.getHours() + 3);
+        //now.setHours(now.getHours() + 3);
         var d = new Date(date);
 
         var dayDiff = now.getDate() - d.getDate();
