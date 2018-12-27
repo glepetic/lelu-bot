@@ -8,6 +8,9 @@ module.exports = {
 
         osuApi.getUser(user,
             function(err, userJSON){
+				if(userJSON == null){
+					message.channel.send("The player " + user + " does not exist.");
+				}
                 var username = userJSON["username"];
 
                 osuApi.getUserRecent(user,
