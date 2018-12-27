@@ -6,12 +6,14 @@ module.exports = {
         var mentionedPeople = message.mentions.users;
         if(mentionedPeople.first() == null) return;
         mentionedPeople.array().forEach((user) => {
-            if(!user.bot) user.send("Sos puto");
+            if(!user.bot) user.send("You are so gay");
         });
     },
     osu : function(message, args){
         var cmd = args[0];
         switch(cmd){
+            case null:
+                break;
             case "recent":
                 var user = args[1];
                 if(user == null) break;

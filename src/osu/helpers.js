@@ -18,5 +18,59 @@ module.exports = {
         }
         footer = footer + " ago";
         return footer;
+    },
+
+    determinateRank: function(rank){
+        switch(rank){
+            case "A" :
+                return "<:rankingAsmall:527695142493356052>";
+            case "B" :
+                return "<:rankingBsmall:527695161149620225>";
+            case "C" :
+                return "<:rankingCsmall:527695172172251137>";
+            case "D" :
+                return "<:rankingDsmall:527695181642989599>";
+            case "F" :
+                return "<:rankingFsmall:527660248127897610>";
+            case "S" :
+                return "<:rankingSsmall:527695206380994560>";
+            case "X" :
+                return "<:rankingXsmall:527695239561871370>";
+            case "SH" :
+                return "<:rankingSHsmall:527695193764265995>";
+            case "XH" :
+                return "<:rankingXHsmall:527695215964848159>";
+
+        }
+    },
+
+    generateModsString: function(modNumber){
+        var mods = determinateModsUsed(modNumber);
+        var modsString = "";
+        var i;
+        for(i=0; i<mods.length; i++){
+            modsString = modsString + mods[i];
+            if(i+1 < mods.length){
+                modsString = modsString + ",";
+                continue;
+            }
+        }
+        return modsString;
     }
+
+}
+
+function determinateModsUsed(modNumber){
+    var modsUsed = new Array();
+    console.log(modsUsed.length);
+    if(modNumber === 0) {
+        console.log(modNumber);
+        modsUsed.push("No mods");
+        return modsUsed;
+    }else if(modNumber % 2 > 0){
+        modsUsed.push("No Fail");
+    }else if(modNumber >= 536870912){
+        modsUsed.push("ScoreV2");
+    }
+    return modsUsed;
 }

@@ -9,9 +9,6 @@ module.exports = {
 
     calculateTimeSincePlay : function(date){
         var now = new Date();
-        if(now.getHours() >= 21){
-            now.setDate(now.getDate() + 1);
-        }
         now.setHours(now.getHours() + 3);
         var d = new Date(date);
 

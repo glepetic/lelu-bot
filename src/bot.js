@@ -23,7 +23,7 @@ bot.client.on('ready', () => {
 
     // set status
   bot.client.user.setStatus("online", config.game); // Change from settings/config.json
-   console.log('Your Bot is Online')
+  console.log('Your Bot is Online')
 });
   
 bot.client.on("message", (message) => {
@@ -39,6 +39,8 @@ bot.client.on("message", (message) => {
     var args = parameters.split(' ');
 
     commandsHandler.executeCommand(message, args);
+
+    if(message.member == null) return;
 
     var memRoles = message.member.roles;
 
