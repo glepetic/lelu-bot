@@ -16,9 +16,9 @@ module.exports = {
 }
 var bot = require("./bot.js");
 // bot.osuApi.setMode(bot.osuApi.Modes.osu);
-var config = require(".././settings/config.json");
-var commandsHandler = require("./commandsHandler.js");
-var nonCommandsHandler = require("./nonCommandsHandler.js");
+var config = require("./settings/config.json");
+var commandsHandler = require("./src/commandsHandler.js");
+var nonCommandsHandler = require("./src/nonCommandsHandler.js");
 
 // Set the prefix
 var prefix = config.prefix;

@@ -1,4 +1,4 @@
-var bot = require("./bot.js");
+var bot = require(".././bot.js");
 var osuCommands = require("./osu/osuCommands.js");
 
 module.exports = {

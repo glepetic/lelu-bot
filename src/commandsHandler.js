@@ -1,4 +1,4 @@
-var bot = require("./bot.js");
+var bot = require(".././bot.js");
 var adminCommands = require("./adminCommands.js");
 var regularCommands  = require("./regularCommands.js");
 var ownerCommands = require("./ownerCommands.js");

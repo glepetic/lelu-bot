@@ -1,4 +1,4 @@
-var bot = require(".././bot.js");
+var bot = require("../.././bot.js");
 var osuApi = bot.osuApi;
 var osuMath = require("./math.js");
 var osuHelpers = require("./helpers.js");
