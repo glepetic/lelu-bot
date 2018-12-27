@@ -23,13 +23,14 @@ module.exports = {
     osu : function(message, args){
         var cmd = args[0];
         switch(cmd){
-            case null:
+            case "register":
+				message.channel.send("TODO");
                 break;
             case "recent":
                 var user = args[1];
                 if(user == null) break;
                 var i;
-                user = user + " ";
+                if(args[2] != null) user = user + " ";
                 for(i=2; i<args.length; i++){
                     user = user + args[i];
 					if(i+1 < args.length){
