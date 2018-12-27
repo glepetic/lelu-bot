@@ -10,6 +10,7 @@ module.exports = {
             function(err, userJSON){
 				if(userJSON == null){
 					message.channel.send("The player " + user + " does not exist.");
+					return;
 				}
                 var username = userJSON["username"];
 
