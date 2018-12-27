@@ -1,6 +1,6 @@
 {
-  "name": "homo-bot",
-  "description": "Basic Bot",
+  "name": "sucre-bot",
+  "description": "Complex Bot",
   "version": "1.0.0",
   "main": "bot.js",
   "author": "Gonzalo Lepetic",
