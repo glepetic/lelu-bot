@@ -11,8 +11,8 @@ module.exports = {
   client : new Discord.Client(),
   discord : Discord,
   request : request,
-  bigNumbers : big
- // media : ffmpeg
+  bigNumbers : big,
+  appRoot : __dirname
 }
 var bot = require("./bot.js");
 // bot.osuApi.setMode(bot.osuApi.Modes.osu);
