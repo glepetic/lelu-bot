@@ -1,7 +1,7 @@
 {
   "name": "sucre-bot",
   "description": "Complex Bot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "bot.js",
   "author": "Gonzalo Lepetic",
   "dependencies": {
