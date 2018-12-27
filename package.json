@@ -19,6 +19,7 @@
     "request": "^2.88.0",
     "require.js": "^1.0.0",
     "uws": "^99.0.0",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+	"node-opus": "0.3.1"
   }
 }
