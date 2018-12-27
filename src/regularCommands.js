@@ -31,7 +31,10 @@ module.exports = {
                 var i;
                 user = user + " ";
                 for(i=2; i<args.length; i++){
-                    user = user + args[i] + " ";
+                    user = user + args[i];
+					if(i+1 < args.length){
+						user = user + " ";
+					}
                 }
                 osuCommands.recent(message, user);
                 break;
