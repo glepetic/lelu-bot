@@ -7,7 +7,7 @@ module.exports = {
 		var voiceChannel = message.member.voiceChannel;
 		if(voiceChannel  == null) return;
 		voiceChannel.join().then(connection => {
-			var dispatcher = connection.playFile("./public/audio/meMuero.mp3");
+			var dispatcher = connection.playFile("/public/audio/meMuero.mp3");
 			dispatcher.on("end", end => {
 				voiceChannel.leave();
 			});
