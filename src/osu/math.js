@@ -1,7 +1,7 @@
 module.exports = {
     calculateAccuracy : function(count50s, count100s, count300s, countMiss){
         var totalCount = count50s*1 + count100s*1 + count300s*1 + countMiss*1;
-        return (count50s*50 + count100s*100 + count300s*300)*100/totalCount*300;
+        return ((count50s*50 + count100s*100 + count300s*300)*100)/(totalCount*300);
     },
 
     calculateTimeSincePlay : function(date){
