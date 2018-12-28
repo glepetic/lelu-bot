@@ -46,9 +46,9 @@ module.exports = {
                                 embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")");
                                 embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
                                 //TODO: generate used mods from id
-                                var mods = osuHelpers.generateModsString(recentScores[0]["enabled_mods"]);
-                                embed.addField("Mods", mods, true);
-                                //embed.addField("Mods", recentScores[0]["enabled_mods"], true);
+                                // var mods = osuHelpers.generateModsString(recentScores[0]["enabled_mods"]);
+                                // embed.addField("Mods", mods, true);
+                                embed.addField("Mods", recentScores[0]["enabled_mods"], true);
                                 embed.addField("300s", count300s, true);
                                 embed.addField("100s", count100s, true);
                                 embed.addField("50s", count50s, true);
