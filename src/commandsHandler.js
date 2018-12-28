@@ -18,6 +18,11 @@ module.exports = {
                 var osuArgs = args.filter(param => !(param === "osu"));
                 regularCommands.osu(message, osuArgs);
 				break;
+            case "uptime" :
+                break;
+            case "age" :
+                regularCommands.age(message);
+                break;
 
         }
     },

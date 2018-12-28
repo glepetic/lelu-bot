@@ -1,6 +1,6 @@
 var Discord = require("discord.js");
 var osu = require("osu-api");
-var request = require("request");
+var req = require("request");
 var big = require("big.js");
 var MongoClient = require("mongodb").MongoClient;
 var assert = require("assert");
@@ -9,12 +9,13 @@ module.exports = {
     notFoundAsError : true,
     completeScores : true
   }),
-  mongoClient : new MongoClient("mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/", { useNewUrlParser: true }),
-  client : new Discord.Client(),
-  discord : Discord,
-  request : request,
-  bigNumbers : big,
-  appRoot : __dirname
+    startTime : new Date(),
+    mongoClient : new MongoClient("mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/", { useNewUrlParser: true }),
+    client : new Discord.Client(),
+    discord : Discord,
+    request : req,
+    bigNumbers : big,
+    appRoot : __dirname
 }
 
 var bot = require("./bot.js");
@@ -47,8 +48,6 @@ bot.client.on("message", (message) => {
     commandsHandler.executeCommand(message, args);
 
     if(message.member == null) return;
-
-    var memRoles = message.member.roles;
 
     commandsHandler.executeAdminCommand(message, args);
 

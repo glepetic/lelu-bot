@@ -79,6 +79,7 @@ module.exports = {
                     return;
                 }
                 if(result.length == 0){
+                    console.log("Empty set");
                     return;
                 }
                 return result[0]["osu"];

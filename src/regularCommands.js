@@ -2,6 +2,7 @@ var bot = require(".././bot.js");
 var osuCommands = require("./osu/osuCommands.js");
 var osuHelpers = require("./osu/helpers.js");
 var helpers = require("./helpers.js");
+var math = require("./math.js");
 
 module.exports = {
 	worms : function(message){
@@ -17,9 +18,12 @@ module.exports = {
 	},
     gay : function(message){
         var mentionedPeople = message.mentions.users;
-        if(mentionedPeople.first() == null) return;
+        if(mentionedPeople.first() == null){
+            message.channel.send("Who is gay?");
+            return;
+        }
         mentionedPeople.array().forEach((user) => {
-            if(!user.bot) user.send("You are so gay");
+            if(!user.bot) user.send("You are ultra gay");
         });
     },
     osu : function(message, args){
@@ -42,5 +46,32 @@ module.exports = {
                 osuCommands.recent(message, user);
                 break;
         }
+    },
+    age : function(message){
+	    var mentionedUser = message.mentions.users.first();
+	    var now = new Date();
+	    var age;
+	    var reply;
+        if(mentionedUser == null){
+            var guildCreation = message.guild.createdAt;
+            age = math.dayDifference(guildCreation, now);
+            reply = "The server was created ";
+        }else{
+            var userCreation = mentionedUser.createdAt;
+            age = math.dayDifference(userCreation, now);
+            reply = "The user was created ";
+        }
+        var ageInYears = age/365.25;
+        var years = parseInt(ageInYears);
+        var ageMinusYearsInMonths = (ageInYears - years)*12;
+        var months = parseInt(ageMinusYearsInMonths);
+        var ageMinusYearsAndMonthsInDays = (ageMinusYearsInMonths - months)*365.25/12;
+        var days = parseInt(ageMinusYearsAndMonthsInDays);
+
+        reply = reply + years + " years, " + months + " months and" + days " days ago";
+
+        message.channel.send(reply);
+
     }
+
 }
