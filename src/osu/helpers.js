@@ -53,10 +53,10 @@ module.exports = {
         var i;
         for(i=0; i<mods.length; i++){
             modsString = modsString + mods[i];
-            if(i+1 < mods.length){
-                modsString = modsString + ",";
-                continue;
-            }
+        //     if(i+1 < mods.length){
+        //         modsString = modsString + ",";
+        //         continue;
+        //     }
         }
         return modsString;
     },
