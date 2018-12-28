@@ -68,7 +68,7 @@ module.exports = {
         var ageMinusYearsAndMonthsInDays = (ageMinusYearsInMonths - months)*365.25/12;
         var days = parseInt(ageMinusYearsAndMonthsInDays);
 
-        reply = reply + years + " years, " + months + " months and" + days + " days ago";
+        reply = reply + years + " years, " + months + " months and " + days + " days ago";
 
         message.channel.send(reply);
 
