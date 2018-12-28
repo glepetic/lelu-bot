@@ -61,7 +61,7 @@ module.exports = {
                                 var footer = osuHelpers.generateTimeFooter(hours, minutes);
                                 embed.setFooter(footer);
 
-                                console.log(math.decToBinary(mods) == null);
+                                console.log(math.decToBinary(mods).length == 0);
                                 message.channel.send(embed);
 
                             });
