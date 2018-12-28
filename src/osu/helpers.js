@@ -63,8 +63,11 @@ module.exports = {
     findUser : function(userID){
 
         bot.mongoClient.connect(function(err){
-            console.error(err);
-            console.log("Connected succesfully to osu database");
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log("Connected succesfully to mongo server");
 
             var osudb = bot.mongoClient.db("osu");
             var osuUserRegister = osudb.collection("user-register");
@@ -95,16 +98,38 @@ module.exports = {
 }
 
 function determinateModsUsed(modNumber){
+
     var modsUsed = new Array();
-    console.log(modsUsed.length);
-    if(modNumber === 0) {
-        console.log(modNumber);
-        modsUsed.push("No mods");
-        return modsUsed;
-    }else if(modNumber % 2 > 0){
-        modsUsed.push("No Fail");
-    }else if(modNumber >= 536870912){
-        modsUsed.push("ScoreV2");
-    }
+
+    bot.mongoClient.connect(function(err){
+      if(err){
+          console.error(err);
+          return;
+      }
+
+      console.log("Connected succesfully to mongo server");
+
+      var osudb = bot.mongoClient.db("osu");
+      var osuMods = osudb.collection("mods");
+      var query = {_id: modNumber};
+      osuMods.find(query).toArray(function(err, result){
+         if(err){
+             console.error(err);
+             return;
+         }
+
+         if(result.length == 0){
+             console.log("More than one mod");
+             modsUsed.push("More than one mod");
+         }else{
+             modsUsed.push(result[0]["name"]);
+             return modsUsed;
+         }
+
+      });
+      bot.mongoClient.close();
+
+    });
+
     return modsUsed;
 }
