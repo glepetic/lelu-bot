@@ -59,7 +59,7 @@ module.exports = {
                                 }
                                 var modsString = "";
                                 var j;
-                                for(j=0; i<binaryNumber.length; j++){
+                                for(j=0; j<binaryNumber.length; j++){
                                     modsString = modsString + binaryNumber[j];
                                     //     if(i+1 < mods.length){
                                     //         modsString = modsString + ",";
