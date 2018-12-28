@@ -8,19 +8,12 @@ module.exports = {
     decToBinary : function(decimalNumber){
         var binaryNumber = new Array();
 
-        // var i = 0;
-
         while(decimalNumber > 0){
 
             binaryNumber.push(decimalNumber % 2);
             decimalNumber = decimalNumber / 2;
-            // i++;
 
         }
-
-        binaryNumber.forEach(n => process.stdout.write(n.toString()));
-
-
 
     }
 }
