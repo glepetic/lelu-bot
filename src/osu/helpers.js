@@ -104,5 +104,7 @@ function determinateModsUsed(modNumber){
 
     var binaryModNumber = math.decToBinary(modNumber);
 
-    return modsUsed;
+    return binaryModNumber;
+
+    // return modsUsed;
 }
