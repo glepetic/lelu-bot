@@ -59,7 +59,7 @@ module.exports = {
         }else{
             var userCreation = mentionedUser.createdAt;
             age = math.dayDifference(userCreation, now);
-            reply = "${mentionedUser} was created ";
+            reply = mentionedUser.toString() + " was created ";
         }
         var ageInYears = age/365.25;
         var years = parseInt(ageInYears);
