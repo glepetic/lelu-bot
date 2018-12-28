@@ -6,7 +6,7 @@ module.exports = {
             message.channel.send("Please provide the number of messages to delete.");
             return;
         }
-        if (qty == 0) {
+        if (qty <= 0) {
             message.channel.send("Why did you even bother writing? 🤦🏼‍");
             return;
         }

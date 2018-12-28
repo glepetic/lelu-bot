@@ -22,21 +22,6 @@ var config = require("./settings/config.json");
 var commandsHandler = require("./src/commandsHandler.js");
 var nonCommandsHandler = require("./src/nonCommandsHandler.js");
 
-bot.mongoClient.connect(function(err){
-	console.error(err);
-	console.log("Connected succesfully to server");
-	
-	var osudb = bot.mongoClient.db("osu");
-	var osuUserRegister = osudb.collection("user-register");
-	osuUserRegister.insertOne({osu : "xHix", discord: "500036526546223106"},
-		function(err, result){
-			//do something
-		});
-	bot.mongoClient.close();
-	
-	
-});
-
 // Set the prefix
 var prefix = config.prefix;
 
@@ -65,12 +50,7 @@ bot.client.on("message", (message) => {
 
     var memRoles = message.member.roles;
 
-    if(memRoles.some(role => role.hasPermission("ADMINISTRATOR"))){
-      commandsHandler.executeAdminCommand(message, args);
-	  return;
-    }
-	
-	message.channel.send("You are not an admin");
+    commandsHandler.executeAdminCommand(message, args);
 
     }
 

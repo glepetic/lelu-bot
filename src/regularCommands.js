@@ -1,5 +1,7 @@
 var bot = require(".././bot.js");
 var osuCommands = require("./osu/osuCommands.js");
+var osuHelpers = require("./osu/helpers.js");
+var helpers = require("./helpers.js");
 
 module.exports = {
 	worms : function(message){
@@ -24,19 +26,19 @@ module.exports = {
         var cmd = args[0];
         switch(cmd){
             case "register":
-				message.channel.send("TODO");
+                var discordUserId = message.author.id;
+                var result = osuHelpers.findUser(discordUserId);
+                if(result != null){
+                    message.channel.send("You are already registered as " + result + ". Use 'register-force' to change your user associated.");
+                    return;
+                }
+                var user = helpers.getUsername(args, 1);
+                if(user == null) message.channel.send("Please indicate the username to register");
+                //todo
                 break;
             case "recent":
-                var user = args[1];
+                var user = helpers.getUsername(args, 1);
                 if(user == null) break;
-                var i;
-                if(args[2] != null) user = user + " ";
-                for(i=2; i<args.length; i++){
-                    user = user + args[i];
-					if(i+1 < args.length){
-						user = user + " ";
-					}
-                }
                 osuCommands.recent(message, user);
                 break;
         }

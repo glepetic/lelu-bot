@@ -1,17 +1,13 @@
 var bot = require(".././bot.js");
 var adminCommands = require("./adminCommands.js");
 var regularCommands  = require("./regularCommands.js");
+var helpers = require("./helpers.js");
 var ownerCommands = require("./ownerCommands.js");
 
 module.exports = {
     executeCommand: function (message, args) {
         var cmd = args[0];
         switch (cmd) {
-			case "kill" :
-				if(new bot.bigNumbers.Big("500036526546223106").eq(message.author.id)){
-					ownerCommands.exit();
-				}
-				break;
 			case "worms":
 				regularCommands.worms(message);
 				break;
@@ -29,6 +25,7 @@ module.exports = {
         var cmd = args[0];
         switch (cmd) {
             case "purge":
+                if(!helpers.verifyAdmin(message.member.roles)) break;
                 var qty = args[1];
                 adminCommands.purge(message, qty);
                 break;

@@ -1,3 +1,5 @@
+var bot = require("../../bot.js");
+
 module.exports = {
     generateTimeFooter : function(hours, minutes){
         var footer;
@@ -56,6 +58,37 @@ module.exports = {
             }
         }
         return modsString;
+    },
+
+    findUser : function(userID){
+
+        bot.mongoClient.connect(function(err){
+            console.error(err);
+            console.log("Connected succesfully to osu database");
+
+            var osudb = bot.mongoClient.db("osu");
+            var osuUserRegister = osudb.collection("user-register");
+            // osuUserRegister.insertOne({osu : "xHix", discord: "500036526546223106"},
+            //             //     function(err, result){
+            //             //         //do something
+            //             //     });
+            var query = {_id: userID};
+            osuUserRegister.find(query).toArray(function(err, result) {
+                if(err){
+                    console.error(err);
+                    return;
+                }
+                if(result.length == 0){
+                    return;
+                }
+                return result[0]["osu"];
+                osudb.close();
+            });
+            bot.mongoClient.close();
+
+
+        });
+
     }
 
 }
