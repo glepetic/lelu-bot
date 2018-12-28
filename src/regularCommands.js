@@ -10,7 +10,7 @@ module.exports = {
         embed.setTitle("Click here for command requests...");
         embed.setURL("https://docs.google.com/document/d/1GUM-9I7AcX34UQiImTN9ADUwOgvjV8RsL6_IKwUjNaw/edit?usp=sharing");
         message.channel.send(embed);
-        message.channel.send(":pikasb:");
+        message.channel.send("<:pikasb:528038230692462602>");
     },
 	worms : function(message){
 				if(message.member == null) return;
