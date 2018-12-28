@@ -8,7 +8,10 @@ module.exports = {
     executeCommand: function (message, args) {
         var cmd = args[0];
         switch (cmd) {
-			case "worms":
+            case "requests" :
+                regularCommands.requests();
+                break;
+			case "worms" :
 				regularCommands.worms(message);
 				break;
             case "gay" :
