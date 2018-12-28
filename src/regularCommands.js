@@ -59,7 +59,7 @@ module.exports = {
         }else{
             var userCreation = mentionedUser.createdAt;
             age = math.dayDifference(userCreation, now);
-            reply = " was created ";
+            reply = "${mentionedUser} was created ";
         }
         var ageInYears = age/365.25;
         var years = parseInt(ageInYears);
@@ -70,12 +70,7 @@ module.exports = {
 
         reply = reply + years + " years, " + months + " months and " + days + " days ago";
 
-        if(mentionedUser == null){
-            message.channel.send(reply);
-            return;
-        }
-
-        message.reply(reply);
+        message.channel.send(reply);
 
     }
 
