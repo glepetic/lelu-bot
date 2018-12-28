@@ -1,4 +1,11 @@
 module.exports = {
+    checkArguments : function(message, args){
+        if(args[1] != null){
+            message.channel.send("This command doesn't take any arguments!");
+            return 1;
+        }
+        return 0;
+    },
     getUsername : function(args, start){
         var user = args[start];
         if(user == null) return;

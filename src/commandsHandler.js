@@ -9,7 +9,8 @@ module.exports = {
         var cmd = args[0];
         switch (cmd) {
             case "requests" :
-                regularCommands.requests();
+                if(helpers.checkArguments()) break;
+                regularCommands.requests(message);
                 break;
 			case "worms" :
 				regularCommands.worms(message);
