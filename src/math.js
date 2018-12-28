@@ -7,7 +7,6 @@ module.exports = {
 
     decToBinary : function(decimalNumber){
         var binaryNumber = new Array();
-        console.log(binaryNumber != null);
 
         // var i = 0;
 
@@ -19,7 +18,7 @@ module.exports = {
 
         }
 
-        binaryNumber.forEach(n => proccess.stdout.write(n.toString()));
+        binaryNumber.forEach(n => process.stdout.write(n.toString()));
 
 
 
