@@ -49,7 +49,7 @@ module.exports = {
                                 //TODO: generate used mods from id
                                 var mods = recentScores[0]["enabled_mods"];
                                 // var mods = osuHelpers.generateModsString(recentScores[0]["enabled_mods"]);
-                                message.channel.send(math.decToBinary(mods));
+                                // message.channel.send(math.decToBinary(mods));
                                 embed.addField("Mods", mods, true);
                                 // embed.addField("Mods", recentScores[0]["enabled_mods"], true);
                                 embed.addField("300s", count300s, true);
