@@ -13,6 +13,7 @@ module.exports = {
                 regularCommands.requests(message);
                 break;
 			case "worms" :
+                if(helpers.checkArguments(message, args)) break;
 				regularCommands.worms(message);
 				break;
             case "gay" :
@@ -26,6 +27,15 @@ module.exports = {
                 break;
             case "age" :
                 regularCommands.age(message);
+                break;
+            case "p" :
+                var text = args[1];
+                var user = helpers.getUsername(args, 2);
+                if(text == null || user == null){
+                    message.channel.send("Please follow template: !p <text> <user>");
+                    break;
+                }
+                regularCommands.p(message, text, user);
                 break;
 
         }

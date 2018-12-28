@@ -17,7 +17,7 @@ module.exports = {
 
         if(content.includes("dark")
             || content.includes("Dark")){
-            const reaction = client.emojis.find(emoji => emoji.name === "ehg");
+            const reaction = client.emojis.find(emoji => emoji.name === "darkhomosb");
             message.react(reaction);
         }
 

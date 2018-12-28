@@ -79,6 +79,10 @@ module.exports = {
 
         message.channel.send(reply);
 
+    },
+    p : function(message, text, user){
+        var percent = new Math.random()*100;
+        message.channel.send(user + " es " + percent + "% " + text);
     }
 
 }
