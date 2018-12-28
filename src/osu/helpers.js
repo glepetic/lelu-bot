@@ -1,4 +1,5 @@
-var bot = require("../../bot.js");
+var bot = require("../.././bot.js");
+var math = require(".././math.js");
 
 module.exports = {
     generateTimeFooter : function(hours, minutes){
@@ -101,35 +102,7 @@ function determinateModsUsed(modNumber){
 
     var modsUsed = new Array();
 
-    bot.mongoClient.connect(function(err){
-      if(err){
-          console.error(err);
-          return;
-      }
-
-      console.log("Connected succesfully to mongo server");
-
-      var osudb = bot.mongoClient.db("osu");
-      var osuMods = osudb.collection("mods");
-      var query = {_id: modNumber};
-      osuMods.find(query).toArray(function(err, result){
-         if(err){
-             console.error(err);
-             return;
-         }
-
-         if(result.length == 0){
-             console.log("More than one mod");
-             modsUsed.push("More than one mod");
-         }else{
-             modsUsed.push(result[0]["name"]);
-             return modsUsed;
-         }
-
-      });
-      bot.mongoClient.close();
-
-    });
+    var binaryModNumber = math.decToBinary(modNumber);
 
     return modsUsed;
 }
