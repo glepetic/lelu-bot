@@ -27,5 +27,12 @@ module.exports = {
             message.react(reaction);
         }
 
+        if(content.includes("shoro")
+            || content.includes("Shoro")
+            || content.includes("cry")
+            || content.includes("Cry")){
+            message.channel.send("<:shorosb:528315164592832533>");
+        }
+
     }
 }
