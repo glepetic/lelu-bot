@@ -19,11 +19,19 @@ module.exports = {
             case "gay" :
                 regularCommands.gay(message);
                 break;
+            case "dm" :
+                let flag = args[1];
+                if(flag == null){
+                    message.channel.send("Please follow template: !dm <enable|disable>");
+                    break;
+                }
+                regularCommands.dm(message, args[1]);
             case "osu" :
                 let osuArgs = args.filter(param => !(param === "osu"));
                 regularCommands.osu(message, osuArgs);
 				break;
             case "uptime" :
+                //TODO
                 break;
             case "age" :
                 regularCommands.age(message);

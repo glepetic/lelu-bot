@@ -30,8 +30,15 @@ module.exports = {
             while(randUser.bot){
                 randUser = message.channel.members.random().user;
             }
-            randUser.send("You are ultra gay");
-            message.channel.send("Told **" + randUser.username + "** how gay they are");
+            let dmPref = helpers.getDMPref(randUser.id);
+            let msg;
+            if(dmPref){
+                randUser.send("You are ultra gay");
+                msg = "Told **" + randUser.username + "** how gay they are";
+            }else{
+                msg = "**" + randUser.username + "** has direct messages disabled."
+            }
+            message.channel.send(msg);
             return;
         }
         if(usersToPm.array().length > 4){
@@ -39,11 +46,28 @@ module.exports = {
             return;
         }
 
-        usersToPm.forEach(user => {
+        let nonBots = usersToPm.filter(u => !u.bot);
+        let enabledDMsUsers = nonBots.filter(u => helpers.getDMPref(u));
+
+        enabledDMsUsers.forEach(user => {
             if(!user.bot) user.send("You are ultra gay");
         });
 
         message.channel.send("They indeed are.");
+
+    },
+    dm : function(message, flag){
+        let userId = message.author.id;
+        switch(flag){
+            case "switch" :
+                let dmPref = helpers.getDMPref(userId);
+                helpers.setDMPref(!dmPref);
+                break;
+            default :
+                message.channel.send("Please follow template: !dm switch");
+                break;
+        }
+
 
     },
     osu : function(message, args){

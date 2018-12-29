@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const osu = require("osu-api");
 const req = require("request");
+const fsFunc = require("fs");
 const big = require("big.js");
 const MongoClient = require("mongodb").MongoClient;
 // const assert = require("assert");
@@ -12,7 +13,8 @@ module.exports = {
     discord : Discord,
     request : req,
     bigNumbers : big,
-    appRoot : __dirname
+    appRoot : __dirname,
+    fs : fsFunc
 }
 
 const bot = require("./bot.js");

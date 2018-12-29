@@ -1,3 +1,5 @@
+const bot = require(".././bot.js");
+
 module.exports = {
     checkArguments : function(message, args){
         if(args[1] != null){
@@ -26,5 +28,40 @@ module.exports = {
         }
         message.channel.send("You are not an admin");
         return false;
+    },
+
+    getDMPref : function(userId){
+
+        let path = "./" + bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
+        let rawdata = bot.fs.readFileSync(path);
+        let value;
+        if(rawdata == null){
+            let newJson = {
+                enabled : true
+            };
+
+            let data = JSON.stringify(newJson);
+            bot.fs.writeFileSync(path, data);
+            value = newJson.enabled;
+
+        }else{
+            let jsonFile = JSON.parse(rawdata);
+            value = jsonFile.enabled;
+        }
+
+        return value;
+
+    },
+
+    setDMPref(userId, pref){
+
+        let path = "./" + bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
+        let rawdata = bot.fs.readFileSync(path);
+        let jsonFile = JSON.parse(rawdata);
+        jsonFile.enabled = pref;
+        let changedData = JSON.stringify(jsonFile);
+        bot.fs.writeFileSync(path, changedData);
+
     }
+
 }
