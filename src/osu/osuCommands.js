@@ -8,7 +8,7 @@ module.exports = {
     recent : function(message, user){
 
         let userObj = osuApi.user.get(user);
-        message.channel.send(userObj.accuracy + " " + userObj.username);
+        message.channel.send(userObj.name + " " + userObj.userId + " " + userObj.rank);
 
         // osuApi.getUser(user,
         //     function(err, userJSON){
