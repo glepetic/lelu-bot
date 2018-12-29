@@ -17,6 +17,9 @@ module.exports = {
 				regularCommands.worms(message);
 				break;
             case "gay" :
+                if(message.mentions.users.first() == null && args[1] != null){
+                    message.channel.send("This command only takes mentions");
+                }
                 regularCommands.gay(message);
                 break;
             case "dm" :
@@ -25,7 +28,8 @@ module.exports = {
                     message.channel.send("Please follow template: !dm <enable|disable>");
                     break;
                 }
-                regularCommands.dm(message, args[1]);
+                message.channel.send("WIP");
+                // regularCommands.dm(message, args[1]);
             case "osu" :
                 let osuArgs = args.filter(param => !(param === "osu"));
                 regularCommands.osu(message, osuArgs);
