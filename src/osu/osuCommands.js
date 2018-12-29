@@ -49,7 +49,7 @@ module.exports = {
                                     embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
                                     //TODO: generate used mods from id
                                     let usedMods = recentScores[0]["enabled_mods"];
-                                    if(usedMods == mods.DT){
+                                    if(usedMods === mods.DT){
                                         embed.addField("Mods", mods.DT, true);
                                     }else{
                                         embed.addField("Mods", usedMods, true);
