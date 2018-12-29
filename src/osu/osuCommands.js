@@ -7,8 +7,11 @@ const math = require(".././math.js");
 module.exports = {
     recent : function(message, user){
 
-        let userObj = osuApi.user.get(user);
-        message.channel.send(userObj.name + " " + userObj.userId + " " + userObj.rank);
+       osuApi.user.get(user).then(result =>
+            message.channel.send(result.name),
+            message.channel.send(result.rank)
+        );
+
 
         // osuApi.getUser(user,
         //     function(err, userJSON){
