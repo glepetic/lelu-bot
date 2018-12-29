@@ -1,8 +1,8 @@
-var bot = require("../.././bot.js");
-var osuApi = bot.osuApi;
-var osuMath = require("./math.js");
-var osuHelpers = require("./helpers.js");
-var math = require(".././math.js");
+const bot = require("../.././bot.js");
+const osuApi = bot.osuApi;
+const osuMath = require("./math.js");
+const osuHelpers = require("./helpers.js");
+const math = require(".././math.js");
 
 module.exports = {
     recent : function(message, user){
@@ -13,7 +13,7 @@ module.exports = {
 					message.channel.send("The player " + user + " does not exist.");
 					return;
 				}
-                var username = userJSON["username"];
+                let username = userJSON["username"];
 
                 osuApi.getUserRecent(user,
                     function(err, recentScores){
@@ -25,20 +25,20 @@ module.exports = {
                         osuApi.getBeatmap(recentScores[0]["beatmap_id"],
                             function(err, beatMap){
 
-                                count50s = recentScores[0]["count50"];
-                                count100s = recentScores[0]["count100"];
-                                count300s = recentScores[0]["count300"];
-                                countmiss = recentScores[0]["countmiss"];
+                                let count50s = recentScores[0]["count50"];
+                                let count100s = recentScores[0]["count100"];
+                                let count300s = recentScores[0]["count300"];
+                                let countmiss = recentScores[0]["countmiss"];
 
-                                var url = "https://osu.ppy.sh/b/" + recentScores[0]["beatmap_id"];
+                                let url = "https://osu.ppy.sh/b/" + recentScores[0]["beatmap_id"];
 
                                 bot.request(url, {json : true}, (err, res, body) => {
                                     if(err){return console.log(err)};
-                                var linkForImageId = res.toJSON()["request"]["uri"]["href"];
-                                var subLink = linkForImageId.substring(31);
-                                var splitImg = subLink.split("#");
+                                let linkForImageId = res.toJSON()["request"]["uri"]["href"];
+                                let subLink = linkForImageId.substring(31);
+                                let splitImg = subLink.split("#");
 
-                                var embed = new bot.discord.RichEmbed();
+                                let embed = new bot.discord.RichEmbed();
                                 embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
                                 embed.setURL(url);
                                 embed.setThumbnail("https://b.ppy.sh/thumb/" + splitImg[0] + "l.jpg");
@@ -47,7 +47,8 @@ module.exports = {
                                 embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")");
                                 embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
                                 //TODO: generate used mods from id
-                                var mods = recentScores[0]["enabled_mods"];
+                                //let r1
+                                let mods = recentScores[0]["enabled_mods"];
                                 // var mods = osuHelpers.generateModsString(recentScores[0]["enabled_mods"]);
                                 embed.addField("Mods", mods, true);
                                 // embed.addField("Mods", recentScores[0]["enabled_mods"], true);
@@ -55,10 +56,10 @@ module.exports = {
                                 embed.addField("100s", count100s, true);
                                 embed.addField("50s", count50s, true);
                                 embed.addField("Misses", countmiss, true);
-                                var minSincePlay = osuMath.calculateTimeSincePlay(recentScores[0].date);
-                                var hours = parseInt(minSincePlay/60);
-                                var minutes = minSincePlay - hours*60;
-                                var footer = osuHelpers.generateTimeFooter(hours, minutes);
+                                let minSincePlay = osuMath.calculateTimeSincePlay(recentScores[0].date);
+                                let hours = parseInt(minSincePlay/60);
+                                let minutes = minSincePlay - hours*60;
+                                let footer = osuHelpers.generateTimeFooter(hours, minutes);
                                 embed.setFooter(footer);
 
                                 console.log(math.decToBinary(mods).length == 0);

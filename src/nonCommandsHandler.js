@@ -1,10 +1,10 @@
-var bot = require(".././bot.js");
-var client = bot.client;
+const bot = require(".././bot.js");
+const client = bot.client;
 
 module.exports = {
     replyToMessage : function(message){
 
-        var content = message.content;
+        let content = message.content;
 
         if(content.includes("gay")
             || content.includes("puto")

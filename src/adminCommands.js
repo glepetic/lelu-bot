@@ -1,7 +1,7 @@
 module.exports = {
     purge : function(message, qty){
-        var messages = message.channel.messages.array();
-        var len = messages.length;
+        let messages = message.channel.messages.array();
+        let len = messages.length;
         if (qty == null) {
             message.channel.send("Please provide the number of messages to delete.");
             return;
@@ -22,8 +22,8 @@ module.exports = {
             return;
         }
         qty++;
-        var i;
-        var totalDeleted = -1;
+        let i;
+        let totalDeleted = -1;
         for (i = len - 1; len - qty <= i; i--) {
             messages[i].delete();
             messages.pop();

@@ -1,9 +1,9 @@
-var Discord = require("discord.js");
-var osu = require("osu-api");
-var req = require("request");
-var big = require("big.js");
-var MongoClient = require("mongodb").MongoClient;
-var assert = require("assert");
+const Discord = require("discord.js");
+const osu = require("osu-api");
+const req = require("request");
+const big = require("big.js");
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
 module.exports = {
     osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3", {
     notFoundAsError : true,
@@ -18,13 +18,13 @@ module.exports = {
     appRoot : __dirname
 }
 
-var bot = require("./bot.js");
-var config = require("./settings/config.json");
-var commandsHandler = require("./src/commandsHandler.js");
-var nonCommandsHandler = require("./src/nonCommandsHandler.js");
+const bot = require("./bot.js");
+const config = require("./settings/config.json");
+const commandsHandler = require("./src/commandsHandler.js");
+const nonCommandsHandler = require("./src/nonCommandsHandler.js");
 
 // Set the prefix
-var prefix = config.prefix;
+const prefix = config.prefix;
 
 bot.client.on('ready', () => {
 
@@ -41,9 +41,9 @@ bot.client.on("message", (message) => {
     nonCommandsHandler.replyToMessage(message);
   }else{
 
-    var msgLength = message.content.length;
-    var parameters = message.content.substring(1, msgLength);
-    var args = parameters.split(' ');
+    let msgLength = message.content.length;
+    let parameters = message.content.substring(1, msgLength);
+    let args = parameters.split(' ');
 
     commandsHandler.executeCommand(message, args);
 

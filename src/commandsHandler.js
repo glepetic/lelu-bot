@@ -1,12 +1,12 @@
-var bot = require(".././bot.js");
-var adminCommands = require("./adminCommands.js");
-var regularCommands  = require("./regularCommands.js");
-var helpers = require("./helpers.js");
-var ownerCommands = require("./ownerCommands.js");
+const bot = require(".././bot.js");
+const adminCommands = require("./adminCommands.js");
+const regularCommands  = require("./regularCommands.js");
+const helpers = require("./helpers.js");
+const ownerCommands = require("./ownerCommands.js");
 
 module.exports = {
     executeCommand: function (message, args) {
-        var cmd = args[0];
+        let cmd = args[0];
         switch (cmd) {
             case "requests" :
                 if(helpers.checkArguments(message, args)) break;
@@ -20,7 +20,7 @@ module.exports = {
                 regularCommands.gay(message);
                 break;
             case "osu" :
-                var osuArgs = args.filter(param => !(param === "osu"));
+                let osuArgs = args.filter(param => !(param === "osu"));
                 regularCommands.osu(message, osuArgs);
 				break;
             case "uptime" :
@@ -29,8 +29,8 @@ module.exports = {
                 regularCommands.age(message);
                 break;
             case "p" :
-                var text = args[1];
-                var user = helpers.getUsername(args, 2);
+                let text = args[1];
+                let user = helpers.getUsername(args, 2);
                 if(text == null || user == null){
                     message.channel.send("Please follow template: !p <text> <user>");
                     break;
@@ -41,11 +41,11 @@ module.exports = {
         }
     },
     executeAdminCommand: function (message, args) {
-        var cmd = args[0];
+        let cmd = args[0];
         switch (cmd) {
             case "purge":
                 if(!helpers.verifyAdmin(message.member.roles)) break;
-                var qty = args[1];
+                let qty = args[1];
                 adminCommands.purge(message, qty);
                 break;
 

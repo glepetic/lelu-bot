@@ -7,9 +7,9 @@ module.exports = {
         return 0;
     },
     getUsername : function(args, start){
-        var user = args[start];
+        let user = args[start];
         if(user == null) return;
-        var i;
+        let i;
         if(args[start + 1] != null) user = user + " ";
         for(i=start + 1; i<args.length; i++){
             user = user + args[i];
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     verifyAdmin : function(roles){
-        if(memRoles.some(role => role.hasPermission("ADMINISTRATOR"))){
+        if(roles.some(role => role.hasPermission("ADMINISTRATOR"))){
             return true;
         }
         message.channel.send("You are not an admin");

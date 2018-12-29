@@ -1,9 +1,9 @@
-var bot = require("../.././bot.js");
-var math = require(".././math.js");
+const bot = require("../.././bot.js");
+const math = require(".././math.js");
 
 module.exports = {
     generateTimeFooter : function(hours, minutes){
-        var footer;
+        let footer;
         if(hours === 0 && minutes === 0){
             footer = "Just now";
             return footer;
@@ -48,9 +48,9 @@ module.exports = {
     },
 
     generateModsString: function(modNumber){
-        var mods = determinateModsUsed(modNumber);
-        var modsString = "";
-        var i;
+        let mods = determinateModsUsed(modNumber);
+        let modsString = "";
+        let i;
         for(i=0; i<mods.length; i++){
             modsString = modsString + mods[i];
         //     if(i+1 < mods.length){
@@ -70,13 +70,13 @@ module.exports = {
             }
             console.log("Connected succesfully to mongo server");
 
-            var osudb = bot.mongoClient.db("osu");
-            var osuUserRegister = osudb.collection("user-register");
+            const osudb = bot.mongoClient.db("osu");
+            const osuUserRegister = osudb.collection("user-register");
             // osuUserRegister.insertOne({osu : "xHix", discord: "500036526546223106"},
             //             //     function(err, result){
             //             //         //do something
             //             //     });
-            var query = {_id: userID};
+            let query = {_id: userID};
             osuUserRegister.find(query).toArray(function(err, result) {
                 if(err){
                     console.error(err);
@@ -100,9 +100,9 @@ module.exports = {
 
 function determinateModsUsed(modNumber){
 
-    var modsUsed = new Array();
+    let modsUsed = new Array();
 
-    var binaryModNumber = math.decToBinary(modNumber);
+    let binaryModNumber = math.decToBinary(modNumber);
 
     return binaryModNumber;
 
