@@ -26,9 +26,12 @@ module.exports = {
     gay : function(message){
         let usersToPm = message.mentions.users;
         if(usersToPm.first() == null){
-            let randUser = message.channel.members.random();
+            let randUser = message.channel.members.random().user;
+            while(randUser.bot){
+                randUser = message.channel.members.random().user;
+            }
             randUser.send("You are ultra gay");
-            message.channel.send("Told **" + randUser.nickname + "** how gay he is");
+            message.channel.send("Told **" + randUser.username + "** how gay he is");
             return;
         }
         if(usersToPm.array().length > 4){
