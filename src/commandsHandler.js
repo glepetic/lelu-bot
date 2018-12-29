@@ -17,7 +17,8 @@ module.exports = {
 				regularCommands.worms(message);
 				break;
             case "gay" :
-                regularCommands.gay(message);
+                let allFlag = args[1] == "all";
+                regularCommands.gay(message, allFlag);
                 break;
             case "osu" :
                 let osuArgs = args.filter(param => !(param === "osu"));

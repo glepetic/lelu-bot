@@ -23,15 +23,22 @@ module.exports = {
 			});
 		}).catch(console.error);
 	},
-    gay : function(message){
-        let mentionedPeople = message.mentions.users;
-        if(mentionedPeople.first() == null){
-            message.channel.send("Who is gay?");
-            return;
+    gay : function(message, allFlag){
+        let usersToPm;
+        if(allFlag){
+            usersToPm = message.channel.members;
+        }else{
+            usersToPm = message.mentions.users;
+            if(usersToPm.first() == null){
+                message.channel.send("Who is gay?");
+                return;
+            }
         }
-        mentionedPeople.array().forEach(user => {
+
+        usersToPm.forEach(user => {
             if(!user.bot) user.send("You are ultra gay");
         });
+
     },
     osu : function(message, args){
         let cmd = args[0];
