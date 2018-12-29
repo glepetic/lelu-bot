@@ -8,8 +8,7 @@ module.exports = {
     recent : function(message, user){
 
        osuApi.user.get(user).then(result =>
-            message.channel.send(result.name),
-            message.channel.send(result.rank)
+            message.channel.send(result.name)
         );
 
 
