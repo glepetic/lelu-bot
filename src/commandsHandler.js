@@ -44,7 +44,7 @@ module.exports = {
         let cmd = args[0];
         switch (cmd) {
             case "purge":
-                if(!helpers.verifyAdmin(message.member.roles)) break;
+                if(!helpers.verifyAdmin(message)) break;
                 let qty = args[1];
                 adminCommands.purge(message, qty);
                 break;

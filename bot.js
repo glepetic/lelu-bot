@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
-const osu = require("nodesu");
+const osu = require("osu-api");
 const req = require("request");
 const big = require("big.js");
 const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
+// const assert = require("assert");
 module.exports = {
-    osuApi : new osu.Client("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3"),
+    osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3"),
     startTime : new Date(),
     mongoClient : new MongoClient("mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/", { useNewUrlParser: true }),
     client : new Discord.Client(),

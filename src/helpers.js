@@ -20,8 +20,8 @@ module.exports = {
         return user;
     },
 
-    verifyAdmin : function(roles){
-        if(roles.some(role => role.hasPermission("ADMINISTRATOR"))){
+    verifyAdmin : function(message){
+        if(message.member.roles.some(role => role.hasPermission("ADMINISTRATOR"))){
             return true;
         }
         message.channel.send("You are not an admin");
