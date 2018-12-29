@@ -30,9 +30,10 @@ module.exports = {
             while(randUser.bot){
                 randUser = message.channel.members.random().user;
             }
-            let dmPref = helpers.getDMPref(randUser.id);
+            // let dmPref = helpers.getDMPref(randUser.id);
             let msg;
-            if(dmPref){
+            // if(dmPref){
+            if(true){
                 randUser.send("You are ultra gay");
                 msg = "Told **" + randUser.username + "** how gay they are";
             }else{
@@ -46,8 +47,9 @@ module.exports = {
             return;
         }
 
-        let nonBots = usersToPm.filter(u => !u.bot);
-        let enabledDMsUsers = nonBots.filter(u => helpers.getDMPref(u));
+        // let nonBots = usersToPm.filter(u => !u.bot);
+        // let enabledDMsUsers = nonBots.filter(u => helpers.getDMPref(u));
+        let enabledDMsUsers = usersToPm;
 
         enabledDMsUsers.forEach(user => {
             if(!user.bot) user.send("You are ultra gay");
