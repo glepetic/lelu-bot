@@ -7,9 +7,7 @@ const math = require(".././math.js");
 module.exports = {
     recent : function(message, user){
 
-       osuApi.user.get(user).then(result =>
-            message.channel.send(result.name)
-        );
+       osuApi.user.get(user).then(console.log);
 
 
         // osuApi.getUser(user,
