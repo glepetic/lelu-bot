@@ -11,7 +11,12 @@ module.exports = {
         while(decimalNumber > 0){
 
             binaryNumber.push(decimalNumber % 2);
-            decimalNumber = decimalNumber / 2;
+            decimalNumber = parseInt(decimalNumber / 2);
+
+            if(decimalNumber < 2){
+                binaryNumber.push(1);
+                break;
+            }
 
         }
 

@@ -1,5 +1,6 @@
 const bot = require("../.././bot.js");
 const math = require(".././math.js");
+const osuMods = require("./mods.js");
 
 module.exports = {
     generateTimeFooter : function(hours, minutes){
@@ -48,17 +49,32 @@ module.exports = {
     },
 
     generateModsString: function(modNumber){
-        let mods = determinateModsUsed(modNumber);
-        let modsString = "";
+        let modsBinary = math.decToBinary(modNumber);
+        let len = modsBinary.length;
         let i;
-        for(i=0; i<mods.length; i++){
-            modsString = modsString + mods[i];
-        //     if(i+1 < mods.length){
-        //         modsString = modsString + ",";
-        //         continue;
-        //     }
+        let modsString = "";
+        let noMods = true;
+
+        for(i=0; i<len; i++){
+
+            if(modsBinary[i] == 1){
+                modsString = modsString + osuMods[i];
+                noMods = false;
+                if(i+1 < len) modsString = modsString + ", ";
+            }
+
         }
+
+        if(noMods) modsString = modsString + "None";
+        if(modsString.includes("NC")){
+            modsString = modsString.replace("DT, ", "");
+        }
+        if(modsString.includes("PF")){
+            modsString = modsString.replace("SD, ", "");
+        }
+
         return modsString;
+
     },
 
     findUser : function(userID){
@@ -98,13 +114,3 @@ module.exports = {
 
 }
 
-function determinateModsUsed(modNumber){
-
-    let modsUsed = new Array();
-
-    let binaryModNumber = math.decToBinary(modNumber);
-
-    return binaryModNumber;
-
-    // return modsUsed;
-}

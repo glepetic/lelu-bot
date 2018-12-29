@@ -9,14 +9,14 @@ module.exports = {
     recent : function(message, user){
 
         osuApi.getUser(user,
-            function(err, userJSON){
+            async function(err, userJSON){
 				if(userJSON == null){
 					message.channel.send("The player " + user + " does not exist.");
 					return;
 				}
                 let username = userJSON["username"];
 
-                osuApi.getUserRecent(user,
+                await osuApi.getUserRecent(user,
                     function(err, recentScores){
                         if(recentScores[0] == null){
                             message.channel.send("This player has not played in the last 24 hours.");
@@ -47,13 +47,9 @@ module.exports = {
                                     embed.addField("Accuracy", Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss)*100)/100 + "%", true);
                                     embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")");
                                     embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
-                                    //TODO: generate used mods from id
                                     let usedMods = recentScores[0]["enabled_mods"];
-                                    if(usedMods === mods.DT){
-                                        embed.addField("Mods", "DT", true);
-                                    }else{
-                                        embed.addField("Mods", usedMods, true);
-                                    }
+                                    let modsString = osuHelpers.generateModsString(usedMods);
+                                    embed.addField("Mods", modsString, true);
                                     embed.addField("300s", count300s, true);
                                     embed.addField("100s", count100s, true);
                                     embed.addField("50s", count50s, true);
