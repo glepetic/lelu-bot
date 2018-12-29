@@ -45,10 +45,10 @@ module.exports = {
             };
 
             let data = JSON.stringify(newJson);
-            bot.fs.writeFileSync(path, data);
+            bot.fs.writeFileSync(path, data, {flag : "w"});
             value = newJson.enabled;
         }
-        
+
         return value;
 
     },
