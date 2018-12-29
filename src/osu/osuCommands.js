@@ -50,7 +50,7 @@ module.exports = {
                                     //TODO: generate used mods from id
                                     let usedMods = recentScores[0]["enabled_mods"];
                                     if(usedMods === mods.DT){
-                                        embed.addField("Mods", mods.DT, true);
+                                        embed.addField("Mods", "DT", true);
                                     }else{
                                         embed.addField("Mods", usedMods, true);
                                     }
