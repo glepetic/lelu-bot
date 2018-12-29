@@ -32,7 +32,7 @@ module.exports = {
 
     getDMPref : function(userId){
 
-        let path = "." + bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
+        let path = bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
         let rawdata;
         let value;
         try{
@@ -45,7 +45,7 @@ module.exports = {
             };
 
             let data = JSON.stringify(newJson);
-            bot.fs.writeFileSync(path, data, {flag : "w"});
+            bot.fs.writeFileSync(path, data, {flag : 'w'});
             value = newJson.enabled;
         }
 
@@ -55,7 +55,7 @@ module.exports = {
 
     setDMPref(userId, pref){
 
-        let path = "." + bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
+        let path = bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
         let rawdata = bot.fs.readFileSync(path);
         let jsonFile = JSON.parse(rawdata);
         jsonFile.enabled = pref;
