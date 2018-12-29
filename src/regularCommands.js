@@ -26,10 +26,7 @@ module.exports = {
     gay : function(message){
         let usersToPm = message.mentions.users;
         if(usersToPm.first() == null){
-            let array = message.channel.members.array();
-            let len = array.length;
-            let randPosition = Math.random()*(len-1);
-            let randUser = array[randPosition];
+            let randUser = message.channel.members.random();
             randUser.send("You are ultra gay");
             message.channel.send("Told **" + randUser.nickname + "** how gay he is");
             return;
