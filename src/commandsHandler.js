@@ -19,6 +19,7 @@ module.exports = {
             case "gay" :
                 if(message.mentions.users.first() == null && args[1] != null){
                     message.channel.send("This command only takes mentions");
+					break;
                 }
                 regularCommands.gay(message);
                 break;
