@@ -23,21 +23,27 @@ module.exports = {
 			});
 		}).catch(console.error);
 	},
-    gay : function(message, allFlag){
-        let usersToPm;
-        if(allFlag){
-            usersToPm = message.channel.members;
-        }else{
-            usersToPm = message.mentions.users;
-            if(usersToPm.first() == null){
-                message.channel.send("Who is gay?");
-                return;
-            }
+    gay : function(message){
+        let usersToPm = message.mentions.users;
+        if(usersToPm.first() == null){
+            let array = message.channel.members.array()
+            let len = array.length;
+            let randPosition = Math.random()*(len-1);
+            let randUser = array[randPosition];
+            randUser.send("You are ultra gay");
+            message.channel.send("Told **" + randUser.nickname + "** how gay he is");
+            return;
+        }
+        if(usersToPm.array().length > 4){
+            message.channel.send("Maximum mentions is 5...Chill bruh");
+            return;
         }
 
         usersToPm.forEach(user => {
             if(!user.bot) user.send("You are ultra gay");
         });
+
+        message.channel.send("They indeed are.");
 
     },
     osu : function(message, args){
