@@ -3,6 +3,7 @@ const osuApi = bot.osuApi;
 const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const math = require(".././math.js");
+const mods = require("./mods.js");
 
 module.exports = {
     recent : function(message, user){
@@ -47,10 +48,12 @@ module.exports = {
                                     embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")");
                                     embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
                                     //TODO: generate used mods from id
-                                    let mods = recentScores[0]["enabled_mods"];
-                                    // var mods = osuHelpers.generateModsString(recentScores[0]["enabled_mods"]);
-                                    embed.addField("Mods", mods, true);
-                                    // embed.addField("Mods", recentScores[0]["enabled_mods"], true);
+                                    let usedMods = recentScores[0]["enabled_mods"];
+                                    if(usedMods == mods.DT){
+                                        embed.addField("Mods", mods.DT, true);
+                                    }else{
+                                        embed.addField("Mods", usedMods, true);
+                                    }
                                     embed.addField("300s", count300s, true);
                                     embed.addField("100s", count100s, true);
                                     embed.addField("50s", count50s, true);

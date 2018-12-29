@@ -31,7 +31,7 @@ module.exports = {
                 randUser = message.channel.members.random().user;
             }
             randUser.send("You are ultra gay");
-            message.channel.send("Told **" + randUser.username + "** how gay he is");
+            message.channel.send("Told **" + randUser.username + "** how gay they are");
             return;
         }
         if(usersToPm.array().length > 4){
