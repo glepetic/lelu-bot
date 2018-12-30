@@ -12,7 +12,7 @@ module.exports = {
             || content.includes("Puto")
             || content.includes("homo")
             || content.includes("Homo")){
-            message.react("??");
+            message.react("🌈");
         }
 
         if(content.includes("dark")
