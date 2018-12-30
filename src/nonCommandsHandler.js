@@ -12,7 +12,7 @@ module.exports = {
             || content.includes("Puto")
             || content.includes("homo")
             || content.includes("Homo")){
-            message.react("🌈");
+            message.react("??");
         }
 
         if(content.includes("dark")
@@ -32,6 +32,20 @@ module.exports = {
             || content.includes("cry")
             || content.includes("Cry")){
             message.channel.send("<:shorosb:528315164592832533>");
+        }
+
+        if(content.includes("bot")
+            || content.includes("Bot")
+            || content.includes("wobble")
+            || content.includes("Wobble")){
+            message.channel.send("<a:wobblesb:528743238035570710>");
+        }
+
+        if(content.includes("yay")
+            || content.includes("Yay")
+            || content.includes("dance")
+            || content.includes("Dance")){
+            message.channel.send("<a:jedipepesb:528698799187558421>");
         }
 
     }

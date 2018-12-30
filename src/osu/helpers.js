@@ -77,37 +77,30 @@ module.exports = {
 
     },
 
-    findUser : function(userID){
+    registerOnDB : function(message, discordID, username, User){
 
-        bot.mongoClient.connect(function(err){
+        let newUser;
+
+        try {
+
+            newUser = new User({
+                _id: bot.Long.fromString("" + discordID + "", 10),
+                osu: username
+            });
+
+        }catch(err){
+            console.error(err);
+            return;
+        }
+
+        newUser.save(function(err, result){
             if(err){
                 console.error(err);
                 return;
             }
-            console.log("Connected succesfully to mongo server");
-
-            const osudb = bot.mongoClient.db("osu");
-            const osuUserRegister = osudb.collection("user-register");
-            // osuUserRegister.insertOne({osu : "xHix", discord: "500036526546223106"},
-            //             //     function(err, result){
-            //             //         //do something
-            //             //     });
-            let query = {_id: userID};
-            osuUserRegister.find(query).toArray(function(err, result) {
-                if(err){
-                    console.error(err);
-                    return;
-                }
-                if(result.length == 0){
-                    console.log("Empty set");
-                    return;
-                }
-                return result[0]["osu"];
-                osudb.close();
-            });
-            bot.mongoClient.close();
-
-
+            console.log(result);
+            message.channel.send("Done!");
+            bot.mongoose.connection.close();
         });
 
     }

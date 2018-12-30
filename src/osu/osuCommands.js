@@ -2,8 +2,7 @@ const bot = require("../.././bot.js");
 const osuApi = bot.osuApi;
 const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
-const math = require(".././math.js");
-const mods = require("./mods.js");
+const osuDB = require(".././db/osuDB.js");
 
 module.exports = {
     recent : function(message, user){
@@ -68,6 +67,68 @@ module.exports = {
                         });
 
                 });
+
+        });
+
+    },
+
+    register : function(message, user, force){
+        let discordUserId = message.author.id;
+
+        bot.mongoose.connect(bot.mongoURL + "osu", {useNewUrlParser : true});
+        let db = bot.mongoose.connection;
+
+        db.on("error", console.error.bind(console, 'connection error:'));
+        db.once("open", async function(){
+            //we are connected
+            console.log("Connected succesfully to osu database");
+
+            let User = osuDB.User;
+
+            let query;
+
+            try {
+                query = User.findOne({_id : discordUserId});
+            }catch(err){
+                console.error(err);
+            }
+
+            query.exec(function(err, userRet){
+                if(err){
+                    console.error(err);
+                    return;
+                }
+
+                if(userRet == null || force){
+
+                    if(user == null){
+                        message.channel.send("Please indicate the username to register");
+                        return;
+                    }
+
+                    if(userRet != null){
+                        User.updateOne({_id : discordUserId},
+                            {$set: {osu: user}},
+                            function(err, result){
+                            if(err){
+                                console.error(err);
+                                return;
+                            }
+                            message.channel.send("Done!");
+                            db.close();
+                        });
+                        return;
+                    }
+
+                    osuHelpers.registerOnDB(message, discordUserId, user, User);
+
+                    return;
+                }
+
+                message.channel.send("You are already registered as **" + userRet.osu + "**. Use '!osu register -f <user>' to change your user associated.");
+
+
+            });
 
         });
 

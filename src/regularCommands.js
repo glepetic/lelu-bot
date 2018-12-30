@@ -3,6 +3,7 @@ const osuCommands = require("./osu/osuCommands.js");
 const osuHelpers = require("./osu/helpers.js");
 const helpers = require("./helpers.js");
 const math = require("./math.js");
+const osuDB = require("./db/osuDB.js");
 
 module.exports = {
     requests : function(message){
@@ -77,19 +78,60 @@ module.exports = {
         let user;
         switch(cmd){
             case "register":
-                let discordUserId = message.author.id;
-                let result = osuHelpers.findUser(discordUserId);
-                if(result != null){
-                    message.channel.send("You are already registered as " + result + ". Use 'register-force' to change your user associated.");
+                if(args[1] == null){
+                    message.channel.send("Please follow template: !osu register < -f | -n > <username>");
                     return;
                 }
-                user = helpers.getUsername(args, 1);
-                if(user == null) message.channel.send("Please indicate the username to register");
-                //todo
+                let flag = args[1].substring(1);
+                let force;
+                switch(flag){
+                    case "f" :
+                       force = true;
+                       break;
+                    case "n" :
+                        force = false;
+                        break;
+                    default :
+                        message.channel.send("Please follow template: !osu register < -f | -n > <username>");
+                        return;
+                }
+                user = helpers.getUsername(args, 2);
+                osuCommands.register(message, user, force);
                 break;
             case "recent":
                 user = helpers.getUsername(args, 1);
-                if(user == null) break;
+                if(user == null){
+                    let found = false;
+                    bot.mongoose.connect(bot.mongoURL + "osu", {useNewUrlParser : true});
+                    let db = bot.mongoose.connection;
+                    db.on("error", console.error.bind(console, 'connection error:'));
+                    db.once("open", async function() {
+                        let query;
+                        try {
+                            query = osuDB.User.findOne({_id : message.author.id});
+                        }catch(err){
+                            console.error(err);
+                            return;
+                        }
+
+                        query.exec(async function(err, userRet){
+                            if(err){
+                                console.error(err);
+                                return;
+                            }
+                            let uR = await userRet;
+                            if(uR != null){
+                                found = true;
+                                osuCommands.recent(message, uR.osu);
+                            }else{
+                                message.channel.send("You are not registered! Use !osu register for more info.");
+                            }
+                        });
+
+                    })
+                    break;
+                };
+
                 osuCommands.recent(message, user);
                 break;
         }
