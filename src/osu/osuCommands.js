@@ -36,15 +36,21 @@ module.exports = {
                                     if(err){return console.log(err)};
                                     let linkForImageId = res.toJSON()["request"]["uri"]["href"];
                                     let subLink = linkForImageId.substring(31);
-                                    let splitImg = subLink.split("#");
+                                    let splitID = subLink.split("#");
 
                                     let embed = new bot.discord.RichEmbed();
                                     embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
                                     embed.setURL(url);
-                                    embed.setThumbnail("https://b.ppy.sh/thumb/" + splitImg[0] + "l.jpg");
+                                    embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
                                     embed.addField("Rank", osuHelpers.determinateRank(recentScores[0].rank), true);
                                     embed.addField("Accuracy", Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss)*100)/100 + "%", true);
-                                    embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")");
+                                    let maxCombo = recentScores[0]["maxcombo"];
+                                    if(recentScores[0]["perfect"] == 1){
+                                        embed.addField("Max Combo", "Perfect", true);
+                                    }else{
+                                        embed.addField("Max Combo", maxCombo, true);
+                                    }
+                                    embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")", true);
                                     embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
                                     let usedMods = recentScores[0]["enabled_mods"];
                                     let modsString = osuHelpers.generateModsString(usedMods);
@@ -53,13 +59,13 @@ module.exports = {
                                     embed.addField("100s", count100s, true);
                                     embed.addField("50s", count50s, true);
                                     embed.addField("Misses", countmiss, true);
+                                    embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")\n");
                                     let minSincePlay = osuMath.calculateTimeSincePlay(recentScores[0].date);
                                     let hours = parseInt(minSincePlay/60);
                                     let minutes = minSincePlay - hours*60;
                                     let footer = osuHelpers.generateTimeFooter(hours, minutes);
                                     embed.setFooter(footer);
 
-                                    //let r1 = await math.decToBinary(mods);
                                     message.channel.send(embed);
 
                                 });
@@ -106,21 +112,33 @@ module.exports = {
                         return;
                     }
 
-                    if(userRet != null){
-                        User.updateOne({_id : discordUserId},
-                            {$set: {osu: user}},
-                            function(err, result){
-                            if(err){
-                                console.error(err);
-                                return;
-                            }
-                            message.channel.send("Done!");
-                            db.close();
-                        });
-                        return;
-                    }
+                    osuApi.getUser(user, async function(err, osuUser){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        if(await osuUser == null){
+                            message.channel.send("Only valid osu usernames are allowed!");
+                            return;
+                        }
 
-                    osuHelpers.registerOnDB(message, discordUserId, user, User);
+                        if(userRet != null){
+                            User.updateOne({_id : discordUserId},
+                                {$set: {osu: user}},
+                                function(err, result){
+                                    if(err){
+                                        console.error(err);
+                                        return;
+                                    }
+                                    message.channel.send("Done!");
+                                    db.close();
+                                });
+                            return;
+                        }
+
+                        osuHelpers.registerOnDB(message, discordUserId, user, User);
+
+                    });
 
                     return;
                 }
