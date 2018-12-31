@@ -169,6 +169,15 @@ module.exports = {
     p : function(message, text, user){
         let percent = Math.round(Math.random()*100);
         message.channel.send(user + " is " + percent + "% " + text);
-    }
+    },
+    help : function (message) {
+        let embed= new bot.discord.RichEmbed();
+        embed.setTitle("Commands");
+        embed.addField("!osu recent -username-", "Brings the most recent play by the user");
+        embed.addField("!gay:","nothing else to say.");
+        embed.addField("!age:","check your server/user age!");
+        embed.addField("!p:","rng number from 0-100");
+        message.channel.send(embed);
 
+    }
 }

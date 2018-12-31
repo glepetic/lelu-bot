@@ -50,6 +50,12 @@ module.exports = {
                 }
                 regularCommands.p(message, text, user);
                 break;
+            case "help" :
+                regularCommands.help(message);
+                break;
+            default:
+                message.channel.send("This command does not exist! Please use !help for more information.");
+                break;
 
         }
     },
