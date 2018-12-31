@@ -32,8 +32,8 @@ module.exports = {
                 message.channel.send("WIP");
                 // regularCommands.dm(message, args[1]);
             case "osu" :
-                let osuArgs = args.filter(param => !(param === "osu"));
-                regularCommands.osu(message, osuArgs);
+                args.shift();
+                regularCommands.osu(message, args);
 				break;
             case "uptime" :
                 //TODO
