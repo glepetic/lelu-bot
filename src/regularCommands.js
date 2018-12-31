@@ -27,6 +27,10 @@ module.exports = {
     gay : function(message){
         let usersToPm = message.mentions.users;
         if(usersToPm.first() == null){
+			if(message.channel.members == null){
+				message.channel.recipient.send(":v");
+				return;
+			}
             let randUser = message.channel.members.random().user;
             while(randUser.bot){
                 randUser = message.channel.members.random().user;

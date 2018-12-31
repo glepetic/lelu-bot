@@ -43,9 +43,9 @@ bot.client.on("message", (message) => {
   // Exit and stop if the prefix is not there or if user is a bot
   if (message.author.bot) return;
 
-  if(!message.content.startsWith(prefix)){
-    nonCommandsHandler.replyToMessage(message);
-  }else{
+  nonCommandsHandler.replyToMessage(message);
+  
+  if(message.content.startsWith(prefix)){
 
     let msgLength = message.content.length;
     let parameters = message.content.substring(1, msgLength);
@@ -57,7 +57,7 @@ bot.client.on("message", (message) => {
 
     commandsHandler.executeAdminCommand(message, args);
 
-    }
+  }
 
 });
 
