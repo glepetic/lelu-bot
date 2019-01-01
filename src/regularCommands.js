@@ -161,6 +161,8 @@ module.exports = {
            age = math.dayDifference(userCreation, now);
 	   if(mentionedUser.id == new bot.bigNumbers.Big("525097268764737536")){
 		reply = "I ";
+	   }else if(mentionedUser.id == message.author.id){
+		reply = "Your user ";  
 	   }else{
            	reply = mentionedUser.toString() + " ";
 	   }
