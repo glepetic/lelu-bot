@@ -146,13 +146,21 @@ module.exports = {
 	    let age;
 	    let reply;
         if(mentionedUser == null){
-            let guildCreation = message.guild.createdAt;
-            age = math.dayDifference(guildCreation, now);
-            reply = "The server was created ";
+	    let recipient = message.channel.recipient;
+	    if(message.channel.recipient != null){
+		    let userCreation = recipient.createdAt;
+		    age = math.dayDifference(userCreation, now);
+		    reply = "Your user ";
+	    }else{
+		    
+                    let guildCreation = message.guild.createdAt;
+                    age = math.dayDifference(guildCreation, now);
+                    reply = "The server ";
+	    }
         }else{
             let userCreation = mentionedUser.createdAt;
             age = math.dayDifference(userCreation, now);
-            reply = mentionedUser.toString() + " was created ";
+            reply = mentionedUser.toString() + " ";
         }
         let ageInYears = age/365.25;
         let years = parseInt(ageInYears);
@@ -161,7 +169,7 @@ module.exports = {
         let ageMinusYearsAndMonthsInDays = (ageMinusYearsInMonths - months)*365.25/12;
         let days = parseInt(ageMinusYearsAndMonthsInDays);
 
-        reply = reply + years + " years, " + months + " months and " + days + " days ago";
+        reply = reply + "was created" + years + " years, " + months + " months and " + days + " days ago";
 
         message.channel.send(reply);
 
