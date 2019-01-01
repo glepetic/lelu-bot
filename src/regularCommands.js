@@ -148,19 +148,22 @@ module.exports = {
         if(mentionedUser == null){
 	    let recipient = message.channel.recipient;
 	    if(message.channel.recipient != null){
-		    let userCreation = recipient.createdAt;
-		    age = math.dayDifference(userCreation, now);
-		    reply = "Your user ";
-	    }else{
-		    
-                    let guildCreation = message.guild.createdAt;
-                    age = math.dayDifference(guildCreation, now);
-                    reply = "The server ";
+		let userCreation = recipient.createdAt;
+		age = math.dayDifference(userCreation, now);
+		reply = "Your user ";
+	    }else{ 
+            	let guildCreation = message.guild.createdAt;
+            	age = math.dayDifference(guildCreation, now);
+            	reply = "The server ";
 	    }
         }else{
-            let userCreation = mentionedUser.createdAt;
-            age = math.dayDifference(userCreation, now);
-            reply = mentionedUser.toString() + " ";
+           let userCreation = mentionedUser.createdAt;
+           age = math.dayDifference(userCreation, now);
+	   if(mentionedUser.id == new bot.bigNumbers.Big("525097268764737536")){
+		reply = "I ";
+	   }else{
+           	reply = mentionedUser.toString() + " ";
+	   }
         }
         let ageInYears = age/365.25;
         let years = parseInt(ageInYears);
@@ -169,7 +172,7 @@ module.exports = {
         let ageMinusYearsAndMonthsInDays = (ageMinusYearsInMonths - months)*365.25/12;
         let days = parseInt(ageMinusYearsAndMonthsInDays);
 
-        reply = reply + "was created" + years + " years, " + months + " months and " + days + " days ago";
+        reply = reply + "was created " + years + " years, " + months + " months and " + days + " days ago";
 
         message.channel.send(reply);
 
