@@ -47,6 +47,10 @@ module.exports = {
             || content.includes("Dance")){
             message.channel.send("<a:jedipepesb:528698799187558421>");
         }
+		
+		if(content.includes("do u kno da wae")){
+			message.channel.send("i kno da wae mai broda", {file : bot.appRoot + "/public/img/dawae.jpg"});
+		}
 
     }
 }
