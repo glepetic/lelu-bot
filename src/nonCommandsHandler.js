@@ -14,11 +14,7 @@ module.exports = {
 			case "Puto":
 			case "homo":
 			case "Homo":
-				try{
-					message.channel.send("<:shorosb:528315164592832533>");
-				}catch(err){
-					console.error(err);
-				}
+				message.react("\u1F308");
 				break;
 			
 		}
