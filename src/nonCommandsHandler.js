@@ -15,7 +15,7 @@ module.exports = {
 			case "homo":
 			case "Homo":
 				try{
-					message.react("\:rainbow:");
+					message.channel.send("<:shorosb:528315164592832533>");
 				}catch(err){
 					console.error(err);
 				}
