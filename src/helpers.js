@@ -26,7 +26,6 @@ module.exports = {
         if(message.member.roles.some(role => role.hasPermission("ADMINISTRATOR"))){
             return true;
         }
-        message.channel.send("You are not an admin");
         return false;
     },
 
