@@ -14,7 +14,7 @@ module.exports = {
 			case "Puto":
 			case "homo":
 			case "Homo":
-				message.react("??");
+				message.react("\:rainbow:");
 			
 		}
 
