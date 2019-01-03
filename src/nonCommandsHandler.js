@@ -5,15 +5,18 @@ module.exports = {
     replyToMessage : function(message){
 
         let content = message.content;
-
-        if(content.includes("gay")
-            || content.includes("puto")
-            || content.includes("Gay")
-            || content.includes("Puto")
-            || content.includes("homo")
-            || content.includes("Homo")){
-            message.react("🌈");
-        }
+		
+		switch(content){
+			
+			case "gay":
+			case "Gay":
+			case "puto":
+			case "Puto":
+			case "homo":
+			case "Homo":
+				message.react("??");
+			
+		}
 
         if(content.includes("dark")
             || content.includes("Dark")){
