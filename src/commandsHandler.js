@@ -61,12 +61,12 @@ module.exports = {
         switch (cmd) {
 	    case "purge":
 		if(!helpers.verifyAdmin(message)) return;
-                let qty = args[1];
-                adminCommands.purge(message, qty);
-                break;
+            let qty = args[1];
+            adminCommands.purge(message, qty);
+            break;
 
-            default:
-                return;
+        default:
+           return;
         }
     }
 }
