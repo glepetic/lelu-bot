@@ -34,8 +34,8 @@ const prefix = config.prefix;
 bot.client.on('ready', () => {
 
     // set status
-  bot.client.user.setStatus("online", config.game); // Change from settings/config.json
-  bot.client.user.setGame("with NodeJS");
+  bot.client.user.setStatus("online", config.presence); // Change from settings/config.json
+  bot.client.user.setActivity(config.activity.name, { type: config.activity.type })
   console.log('Your Bot is Online')
 });
 
