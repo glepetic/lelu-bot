@@ -57,7 +57,10 @@ module.exports = {
         }
     },
     executeAdminCommand: function (message, args) {
-	if(!helpers.verifyAdmin(message)) return; 
+	if(!helpers.verifyAdmin(message)){
+		message.channel.send("You are not an admin!");
+		return;
+	}
         let cmd = args[0];
         switch (cmd) {
 	    case "purge":
