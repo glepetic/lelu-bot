@@ -35,6 +35,7 @@ bot.client.on('ready', () => {
 
     // set status
   bot.client.user.setStatus("online", config.game); // Change from settings/config.json
+  bot.client.user.setGame("with NodeJS");
   console.log('Your Bot is Online')
 });
 
