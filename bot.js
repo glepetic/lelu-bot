@@ -40,7 +40,12 @@ bot.client.on('ready', () => {
 });
 
 
-bot.client.on("guildCreate", (member) => {
+bot.client.on("guildCreate", (guild) => {
+	bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+	//TODO welcome message
+});
+
+bot.client.on("guildDelete", (guild) => {
 	bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
 	//TODO welcome message
 });
