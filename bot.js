@@ -40,6 +40,11 @@ bot.client.on('ready', () => {
 });
 
 
+bot.client.on("guildCreate", (member) => {
+	bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+	//TODO welcome message
+});
+
 bot.client.on("message", (message) => {
   // Exit and stop if the prefix is not there or if user is a bot
   if (message.author.bot) return;

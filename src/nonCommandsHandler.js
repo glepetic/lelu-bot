@@ -49,7 +49,7 @@ module.exports = {
         }
 		
 		if(content.includes("do u kno da wae")){
-			message.channel.send("i kno da wae mai broda", {file : bot.appRoot + "/public/img/dawae.jpg"});
+			message.channel.send("i kno da wae mai broda", new bot.discord.Attachment(bot.appRoot + "/public/img/dawae.jpg"));
 		}
 
     }
