@@ -15,6 +15,7 @@ module.exports = {
 			case "homo":
 			case "Homo":
 				message.react("\:rainbow:");
+				break;
 			
 		}
 
