@@ -53,17 +53,14 @@ module.exports = {
             case "help" :
                 regularCommands.help(message);
                 break;
-            default:
-                message.channel.send("This command does not exist! Please use !help for more information.");
-                break;
 
         }
     },
     executeAdminCommand: function (message, args) {
+	if(!helpers.verifyAdmin(message)) return; 
         let cmd = args[0];
         switch (cmd) {
-            case "purge":
-                if(!helpers.verifyAdmin(message)) break;
+	    case "purge":
                 let qty = args[1];
                 adminCommands.purge(message, qty);
                 break;
