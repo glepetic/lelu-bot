@@ -35,7 +35,7 @@ bot.client.on('ready', () => {
 
     // set status
   bot.client.user.setStatus("online", config.presence); // Change from settings/config.json
-  bot.client.user.setActivity(config.activity.name, { type: config.activity.type })
+  bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
   console.log('Your Bot is Online')
 });
 
