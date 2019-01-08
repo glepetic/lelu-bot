@@ -72,6 +72,10 @@ module.exports = {
         if(modsString.includes("PF")){
             modsString = modsString.replace("SD, ", "");
         }
+        if(modsString.includes("NF")){
+            modsString = modsString.replace("EZ, ", "");
+            modsString = modsString.replace(", EZ", "");
+        }
 
         return modsString;
 
