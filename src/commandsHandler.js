@@ -53,6 +53,9 @@ module.exports = {
             case "help" :
                 regularCommands.help(message);
                 break;
+            case "gnome" :
+                message.channel.send("https://www.youtube.com/watch?v=6n3pFFPSlW4");
+                break;
 
         }
     },
