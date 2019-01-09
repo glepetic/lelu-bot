@@ -51,7 +51,7 @@ module.exports = {
                                         embed.addField("Max Combo", maxCombo, true);
                                     }
                                     embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + recentScores[0]["user_id"] + ")", true);
-                                    embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "⭐", true);
+                                    embed.addField("Difficulty", Math.round(beatMap["difficultyrating"]*100)/100 + "★", true);
                                     let usedMods = recentScores[0]["enabled_mods"];
                                     let modsString = osuHelpers.generateModsString(usedMods);
                                     embed.addField("Mods", modsString, true);
