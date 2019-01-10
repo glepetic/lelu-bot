@@ -36,6 +36,8 @@ function recent(message, user) {
                             let count100s = lastScore["count100"];
                             let count300s = lastScore["count300"];
                             let countmiss = lastScore["countmiss"];
+                            let countGeki = lastScore["countgeki"];
+                            let countKatu = lastScore["countkatu"];
 
                             let url = "https://osu.ppy.sh/b/" + lastScore["beatmap_id"];
 
@@ -61,11 +63,15 @@ function recent(message, user) {
                                 let usedMods = lastScore["enabled_mods"];
                                 let modsString = osuHelpers.generateModsString(usedMods);
                                 embed.addField("Mods", modsString, true);
-                                embed.addField("300s", count300s, true);
-                                embed.addField("100s", count100s, true);
-                                embed.addField("50s", count50s, true);
-                                embed.addField("Misses", countmiss, true);
-                                embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")\n");
+                                embed.addField("Hits",
+                                    "<:hit300sb:532754291199442964> " + count300s + " "
+                                    + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
+                                    + "<:hit100sb:532754307897098240> " + count100s + " "
+                                    + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
+                                    + "<:hit50sb:532754317808238615> " + count50s + " "
+                                    + "<:hit0sb:532754325467037696> " + countmiss
+                                , true);
+                                embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
                                 let minSincePlay = osuMath.calculateTimeSincePlay(lastScore.date);
                                 let hours = parseInt(minSincePlay / 60);
                                 let minutes = minSincePlay - hours * 60;
