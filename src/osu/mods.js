@@ -1,4 +1,6 @@
-const array = [
+const exp = module.exports;
+
+const names = [
     "NF",
     "EZ",
     "No Video",
@@ -32,4 +34,4 @@ const array = [
     "Last Mod",
 ];
 
-module.exports = array;
+exp.names = names;

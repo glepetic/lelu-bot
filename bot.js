@@ -6,23 +6,26 @@ const big = require("big.js");
 const mongo = require("mongoose");
 const mongoLong = require("mongodb").Long;
 require("mongoose-long")(mongo);
+const PPC = require("osu-pp-calculator");
 
-// const assert = require("assert");
-module.exports = {
-    osuApi : new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3"),
-    startTime : new Date(),
-    mongoose : mongo,
-    mongoURL : "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/",
-    Long : mongoLong,
-    client : new Discord.Client(),
-    discord : Discord,
-    request : req,
-    bigNumbers : big,
-    appRoot : __dirname,
-    fs : fsFunc
-}
+const exp = module.exports;
 
-require("./src/db/osuDB.js").initDB();
+exp.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
+exp.ppC = PPC;
+exp.startTime = new Date();
+exp.mongoose = mongo;
+exp.mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/";
+exp.Long = mongoLong;
+exp.client = new Discord.Client();
+exp.discord = Discord;
+exp.request = req;
+exp.bigNumbers = big;
+exp.appRoot = __dirname;
+exp.fs = fsFunc;
+
+//databases init
+require("./src/db/osuDB.js").init();
+
 const bot = require("./bot.js");
 const config = require("./settings/config.json");
 const commandsHandler = require("./src/commandsHandler.js");
@@ -34,41 +37,41 @@ const prefix = config.prefix;
 bot.client.on('ready', () => {
 
     // set status
-  bot.client.user.setStatus("online", config.presence); // Change from settings/config.json
-  bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
-  console.log('Your Bot is Online')
+    bot.client.user.setStatus("online", config.presence); // Change from settings/config.json
+    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    console.log('Your Bot is Online')
 });
 
 
 bot.client.on("guildCreate", (guild) => {
-	bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
-	//TODO welcome message
+    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    //TODO welcome message
 });
 
 bot.client.on("guildDelete", (guild) => {
-	bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
-	//TODO welcome message
+    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    //TODO welcome message
 });
 
 bot.client.on("message", (message) => {
-  // Exit and stop if the prefix is not there or if user is a bot
-  if (message.author.bot) return;
+    // Exit and stop if the prefix is not there or if user is a bot
+    if (message.author.bot) return;
 
-  nonCommandsHandler.replyToMessage(message);
-  
-  if(message.content.startsWith(prefix)){
+    nonCommandsHandler.replyToMessage(message);
 
-    let msgLength = message.content.length;
-    let parameters = message.content.substring(1, msgLength);
-    let args = parameters.split(' ');
+    if (message.content.startsWith(prefix)) {
 
-    commandsHandler.executeCommand(message, args);
+        let msgLength = message.content.length;
+        let parameters = message.content.substring(1, msgLength);
+        let args = parameters.split(' ');
 
-    if(message.member == null) return;
+        commandsHandler.executeCommand(message, args);
 
-    commandsHandler.executeAdminCommand(message, args);
+        if (message.member == null) return;
 
-  }
+        commandsHandler.executeAdminCommand(message, args);
+
+    }
 
 });
 

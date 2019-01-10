@@ -1,26 +1,29 @@
-module.exports = {
-    dayDifference : function(startDate, endDate){
-        let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-        let diffDays = Math.ceil(timeDiff/(1000*3600*24));
-        return diffDays;
-    },
+const exp = module.exports;
 
-    decToBinary : function(decimalNumber){
-        let binaryNumber = new Array();
+function dayDifference(startDate, endDate) {
+    let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+}
 
-        while(decimalNumber > 0){
+function decToBinary(decimalNumber) {
+    let binaryNumber = new Array();
 
-            binaryNumber.push(decimalNumber % 2);
-            decimalNumber = parseInt(decimalNumber / 2);
+    while (decimalNumber > 0) {
 
-            if(decimalNumber < 2){
-                binaryNumber.push(1);
-                break;
-            }
+        binaryNumber.push(decimalNumber % 2);
+        decimalNumber = parseInt(decimalNumber / 2);
 
+        if (decimalNumber < 2) {
+            binaryNumber.push(1);
+            break;
         }
 
-        return binaryNumber;
-
     }
+
+    return binaryNumber;
+
 }
+
+exp.dayDifference = dayDifference;
+exp.decToBinary = decToBinary;

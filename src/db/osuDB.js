@@ -1,5 +1,6 @@
 let bot = require("../.././bot.js");
-// let mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/";
+
+const exp = module.exports;
 
 let userSchema = new bot.mongoose.Schema({
     _id: bot.mongoose.Schema.Types.Long,
@@ -17,5 +18,18 @@ function init() {
 
 }
 
-module.exports.initDB = init;
-module.exports.User = User;
+function connect(){
+    bot.mongoose.connect(bot.mongoURL + "osu", {useNewUrlParser : true});
+    let osuDB = bot.mongoose.connection;
+    osuDB.on("error", console.error.bind(console, 'connection error:'));
+    return osuDB;
+}
+
+
+//models
+exports.User = User;
+
+//functions
+
+exp.init = init;
+exp.connect = connect;

@@ -1,4 +1,1 @@
-module.exports = {
-
-	
-}
+const exp = module.exports;
