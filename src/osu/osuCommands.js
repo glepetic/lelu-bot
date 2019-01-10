@@ -4,6 +4,7 @@ const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
 const osuDB = require(".././db/osuDB.js");
+const textFormat = require(".././discord/textFormat.js");
 
 const exp = module.exports;
 
@@ -50,35 +51,49 @@ function recent(message, user) {
                                 let subLink = linkForImageId.substring(31);
                                 let splitID = subLink.split("#");
 
-                                let embed = new bot.discord.RichEmbed();
-                                embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
-                                embed.setURL(url);
-                                embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
-                                embed.addField("Rank", osuHelpers.determinateRank(lastScore.rank), true);
-                                embed.addField("Accuracy", Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%", true);
-                                let maxCombo = recentScores[0]["maxcombo"];
-                                embed.addField("Score", helpers.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")", true);
-                                embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + lastScore["user_id"] + ")", true);
-                                embed.addField("Difficulty", Math.round(beatMap["difficultyrating"] * 100) / 100 + "★", true);
+                                let maxCombo = lastScore["maxcombo"];
                                 let usedMods = lastScore["enabled_mods"];
-                                let modsString = osuHelpers.generateModsString(usedMods);
-                                embed.addField("Mods", modsString, true);
-                                embed.addField("Hits",
-                                    "<:hit300sb:532754291199442964> " + count300s + " "
-                                    + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
-                                    + "<:hit100sb:532754307897098240> " + count100s + " "
-                                    + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
-                                    + "<:hit50sb:532754317808238615> " + count50s + " "
-                                    + "<:hit0sb:532754325467037696> " + countmiss
-                                , true);
-                                embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
-                                let minSincePlay = osuMath.calculateTimeSincePlay(lastScore.date);
-                                let hours = parseInt(minSincePlay / 60);
-                                let minutes = minSincePlay - hours * 60;
-                                let footer = osuHelpers.generateTimeFooter(hours, minutes);
-                                embed.setFooter(footer);
 
-                                message.channel.send(embed);
+                                osuApi.getScores(lastScore["beatmap_id"], user,
+                                    function (err, bmpScores) {
+
+                                        let ppGain = "";
+
+                                        let score = bmpScores.filter(scr => scr.date === lastScore.date).shift();
+                                        if (score != null) {
+                                            ppGain = textFormat.boldString(" +" + Math.round(score.pp) + "pp");
+                                        }
+
+                                        let embed = new bot.discord.RichEmbed();
+                                        embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
+                                        embed.setURL(url);
+                                        embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
+                                        embed.addField("Rank & PP", osuHelpers.determinateRank(lastScore.rank) + ppGain, true);
+                                        embed.addField("Accuracy", textFormat.boldString(Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%"), true);
+                                        embed.addField("Score", textFormat.boldString(helpers.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")"), true);
+                                        embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + lastScore["user_id"] + ")", true);
+                                        embed.addField("Difficulty", textFormat.boldString(Math.round(beatMap["difficultyrating"] * 100) / 100 + "★"), true);
+                                        let modsString = osuHelpers.generateModsString(usedMods);
+                                        let boldMods = textFormat.boldString(modsString);
+                                        embed.addField("Mods", boldMods, true);
+                                        embed.addField("Hits",
+                                            "<:hit300sb:532754291199442964> " + count300s + " "
+                                            + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
+                                            + "<:hit100sb:532754307897098240> " + count100s + " "
+                                            + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
+                                            + "<:hit50sb:532754317808238615> " + count50s + " "
+                                            + "<:hit0sb:532754325467037696> " + countmiss
+                                            , true);
+                                        embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
+                                        let minSincePlay = osuMath.calculateTimeSincePlay(lastScore.date);
+                                        let hours = parseInt(minSincePlay / 60);
+                                        let minutes = minSincePlay - hours * 60;
+                                        let footer = osuHelpers.generateTimeFooter(hours, minutes);
+                                        embed.setFooter(footer);
+
+                                        message.channel.send(embed);
+
+                                    });
 
                             });
 

@@ -6,12 +6,10 @@ const big = require("big.js");
 const mongo = require("mongoose");
 const mongoLong = require("mongodb").Long;
 require("mongoose-long")(mongo);
-const PPC = require("osu-pp-calculator");
 
 const exp = module.exports;
 
 exp.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
-exp.ppC = PPC;
 exp.startTime = new Date();
 exp.mongoose = mongo;
 exp.mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/";
