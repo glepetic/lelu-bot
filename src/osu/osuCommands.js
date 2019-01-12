@@ -46,7 +46,7 @@ function recent(message, user) {
                                 if (err) {
                                     return console.log(err)
                                 }
-                                ;
+
                                 let linkForImageId = res.toJSON()["request"]["uri"]["href"];
                                 let subLink = linkForImageId.substring(31);
                                 let splitID = subLink.split("#");
@@ -179,5 +179,88 @@ function register(message, user, force) {
 
 }
 
+function best(message, user) {
+
+    osuApi.getUser(user,
+        async function (err, userJSON) {
+            if (userJSON == null) {
+                message.channel.send("The player " + user + " does not exist.");
+                return;
+            }
+            let username = userJSON["username"];
+
+            let bestScore;
+
+            await osuApi.getUserBest(user,
+                function (err, bestScores) {
+
+                    bestScore = bestScores[0];
+
+                    osuApi.getBeatmap(bestScore["beatmap_id"],
+                        function (err, beatMap) {
+
+                            let count50s = bestScore["count50"];
+                            let count100s = bestScore["count100"];
+                            let count300s = bestScore["count300"];
+                            let countmiss = bestScore["countmiss"];
+                            let countGeki = bestScore["countgeki"];
+                            let countKatu = bestScore["countkatu"];
+
+                            let url = "https://osu.ppy.sh/b/" + bestScore["beatmap_id"];
+
+                            bot.request(url, {json: true}, (err, res, body) => {
+                                if (err) {
+                                    return console.log(err)
+                                }
+
+                                let linkForImageId = res.toJSON()["request"]["uri"]["href"];
+                                let subLink = linkForImageId.substring(31);
+                                let splitID = subLink.split("#");
+
+                                let maxCombo = bestScore["maxcombo"];
+                                let usedMods = bestScore["enabled_mods"];
+
+                                let ppGain = textFormat.boldString(" +" + Math.round(bestScore.pp) + "pp");
+
+                                let embed = new bot.discord.RichEmbed();
+                                embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
+                                embed.setURL(url);
+                                embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
+                                embed.addField("Rank & PP", osuHelpers.determinateRank(bestScore.rank) + ppGain, true);
+                                embed.addField("Accuracy", textFormat.boldString(Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%"), true);
+                                embed.addField("Score", textFormat.boldString(helpers.stringifyNumber(bestScore.score) + " (x" + maxCombo + ")"), true);
+                                embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + bestScore["user_id"] + ")", true);
+                                embed.addField("Difficulty", textFormat.boldString(Math.round(beatMap["difficultyrating"] * 100) / 100 + "★"), true);
+                                let modsString = osuHelpers.generateModsString(usedMods);
+                                let boldMods = textFormat.boldString(modsString);
+                                embed.addField("Mods", boldMods, true);
+                                embed.addField("Hits",
+                                    "<:hit300sb:532754291199442964> " + count300s + " "
+                                    + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
+                                    + "<:hit100sb:532754307897098240> " + count100s + " "
+                                    + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
+                                    + "<:hit50sb:532754317808238615> " + count50s + " "
+                                    + "<:hit0sb:532754325467037696> " + countmiss
+                                    , true);
+                                embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
+                                let minSincePlay = osuMath.calculateTimeSincePlay(bestScore.date);
+                                let hours = parseInt(minSincePlay / 60);
+                                let minutes = minSincePlay - hours * 60;
+                                let footer = osuHelpers.generateTimeFooter(hours, minutes);
+                                embed.setFooter(footer);
+
+                                message.channel.send(embed);
+
+                            });
+
+                        });
+
+                });
+
+        });
+
+}
+
 exp.recent = recent;
 exp.register = register;
+exp.best = best;
