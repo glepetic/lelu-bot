@@ -5,6 +5,7 @@ const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
 const osuDB = require(".././db/osuDB.js");
 const textFormat = require(".././discord/textFormat.js");
+const math = require(".././math.js");
 
 const exp = module.exports;
 
@@ -113,8 +114,6 @@ function register(message, user, force) {
 
     db.on("error", console.error.bind(console, 'connection error:'));
     db.once("open", async function () {
-        //we are connected
-        console.log("Connected succesfully to osu database");
 
         let User = osuDB.User;
 
@@ -163,14 +162,14 @@ function register(message, user, force) {
                         return;
                     }
 
-                    osuHelpers.registerOnDB(message, discordUserId, user, User);
+                    osuDB.registerOnDB(message, discordUserId, user);
 
                 });
 
                 return;
             }
 
-            message.channel.send("You are already registered as **" + userRet.osu + "**. Use '!osu register -f <user>' to change your user associated.");
+            message.channel.send("You are already registered as " + textFormat.boldString(userRet.osu) + ". Use '!osu register -f <user>' to change your user associated.");
 
 
         });
@@ -220,34 +219,20 @@ function best(message, user) {
                                 let maxCombo = bestScore["maxcombo"];
                                 let usedMods = bestScore["enabled_mods"];
 
-                                let ppGain = textFormat.boldString(" +" + Math.round(bestScore.pp) + "pp");
-
-                                let embed = new bot.discord.RichEmbed();
-                                embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
-                                embed.setURL(url);
-                                embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
-                                embed.addField("Rank & PP", osuHelpers.determinateRank(bestScore.rank) + ppGain, true);
-                                embed.addField("Accuracy", textFormat.boldString(Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%"), true);
-                                embed.addField("Score", textFormat.boldString(helpers.stringifyNumber(bestScore.score) + " (x" + maxCombo + ")"), true);
-                                embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + bestScore["user_id"] + ")", true);
-                                embed.addField("Difficulty", textFormat.boldString(Math.round(beatMap["difficultyrating"] * 100) / 100 + "★"), true);
-                                let modsString = osuHelpers.generateModsString(usedMods);
-                                let boldMods = textFormat.boldString(modsString);
-                                embed.addField("Mods", boldMods, true);
-                                embed.addField("Hits",
-                                    "<:hit300sb:532754291199442964> " + count300s + " "
-                                    + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
-                                    + "<:hit100sb:532754307897098240> " + count100s + " "
-                                    + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
-                                    + "<:hit50sb:532754317808238615> " + count50s + " "
-                                    + "<:hit0sb:532754325467037696> " + countmiss
-                                    , true);
-                                embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
                                 let minSincePlay = osuMath.calculateTimeSincePlay(bestScore.date);
                                 let hours = parseInt(minSincePlay / 60);
                                 let minutes = minSincePlay - hours * 60;
-                                let footer = osuHelpers.generateTimeFooter(hours, minutes);
-                                embed.setFooter(footer);
+
+                                let embed = osuHelpers.generatePlayEmbed(
+                                    "[" + username + "](https://osu.ppy.sh/users/" + bestScore["user_id"] + ")", url,
+                                    beatMap.title, beatMap.version, splitID[0],
+                                    osuHelpers.determinateRank(bestScore.rank), " +" + Math.round(bestScore.pp) + "pp",
+                                    Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%",
+                                    helpers.stringifyNumber(bestScore.score) + " (x" + maxCombo + ")",
+                                    bestScore.date, Math.round(beatMap["difficultyrating"] * 100) / 100 + "★",
+                                    osuHelpers.generateModsString(usedMods),
+                                    count300s, count100s, count50s, countmiss, countGeki, countKatu,
+                                    osuHelpers.generateTimeFooter(hours, minutes));
 
                                 message.channel.send(embed);
 
@@ -261,6 +246,25 @@ function best(message, user) {
 
 }
 
+function wasted(message, user){
+    osuApi.getUser(user,
+        async function (err, userJSON) {
+            if (userJSON == null) {
+                message.channel.send("The player " + user + " does not exist.");
+                return;
+            }
+            let username = userJSON["username"];
+            let secondsPlayed = userJSON["total_seconds_played"];
+
+            let timeWasted = math.secondsToTimeArray(secondsPlayed);
+            let timeWastedString = helpers.generateTimeString(timeWasted);
+
+            message.channel.send(textFormat.boldString(username) + " has wasted " + timeWastedString + " playing osu!");
+
+        });
+}
+
 exp.recent = recent;
 exp.register = register;
 exp.best = best;
+exp.wasted = wasted;

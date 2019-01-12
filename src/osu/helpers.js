@@ -1,6 +1,7 @@
 const bot = require("../.././bot.js");
 const math = require(".././math.js");
 const osuMods = require("./mods.js");
+const textFormat = require("../discord/textFormat.js");
 
 const exp = module.exports;
 
@@ -82,35 +83,34 @@ function generateModsString(modNumber) {
 
 }
 
-function registerOnDB(message, discordID, username, User) {
+function generatePlayEmbed(userProfile, url, bmpTitle, bmpVersion, bmpHDID, playRank, ppGain, playAccuracy, playScore, playDate, playDifficulty, playMods, count300s, count100s, count50s, countmiss, countGeki, countKatu, footer){
 
-    let newUser;
+    let embed = new bot.discord.RichEmbed();
+    embed.setTitle("__**" + bmpTitle + " [" + bmpVersion + "]" + "**__");
+    embed.setURL(url);
+    embed.setThumbnail("https://b.ppy.sh/thumb/" + bmpHDID + "l.jpg");
+    embed.addField("Rank & PP", playRank + textFormat.boldString(ppGain), true);
+    embed.addField("Accuracy", textFormat.boldString(playAccuracy), true);
+    embed.addField("Score", textFormat.boldString(playScore), true);
+    embed.addField("Player", userProfile, true);
+    embed.addField("Difficulty", textFormat.boldString(playDifficulty), true);
+    embed.addField("Mods", textFormat.boldString(playMods), true);
+    embed.addField("Hits",
+        "<:hit300sb:532754291199442964> " + count300s + " "
+        + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
+        + "<:hit100sb:532754307897098240> " + count100s + " "
+        + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
+        + "<:hit50sb:532754317808238615> " + count50s + " "
+        + "<:hit0sb:532754325467037696> " + countmiss
+        , true);
+    embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + bmpHDID + ")", true);
+    embed.setFooter(footer);
 
-    try {
-
-        newUser = new User({
-            _id: bot.Long.fromString("" + discordID + "", 10),
-            osu: username
-        });
-
-    } catch (err) {
-        console.error(err);
-        return;
-    }
-
-    newUser.save(function (err, result) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log(result);
-        message.channel.send("Done!");
-        bot.mongoose.connection.close();
-    });
+    return embed;
 
 }
 
 exp.generateModsString = generateModsString;
 exp.determinateRank = determinateRank;
 exp.generateTimeFooter = generateTimeFooter;
-exp.registerOnDB = registerOnDB;
+exp.generatePlayEmbed = generatePlayEmbed;

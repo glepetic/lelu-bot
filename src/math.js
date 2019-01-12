@@ -25,5 +25,28 @@ function decToBinary(decimalNumber) {
 
 }
 
+function secondsToTimeArray(timeInSeconds){
+
+    let minutesAndSeconds = timeInSeconds/60;
+    let timeInMinutesMinusSeconds = parseInt(minutesAndSeconds);
+    let seconds = Math.round((minutesAndSeconds - timeInMinutesMinusSeconds)*60);
+    let hoursAndMinutes = timeInMinutesMinusSeconds/60;
+    let timeInHoursMinusMinutes = parseInt(hoursAndMinutes);
+    let minutes = parseInt((hoursAndMinutes - timeInHoursMinusMinutes)*60);
+    let daysAndHours = timeInHoursMinusMinutes/24;
+    let timeInDaysMinusHours = parseInt(daysAndHours);
+    let hours = parseInt((daysAndHours - timeInDaysMinusHours)*24);
+    let monthsAndDays = (timeInDaysMinusHours*12)/365.25;
+    let timeInMonthsMinusDays = parseInt(monthsAndDays);
+    let days = parseInt(((monthsAndDays - timeInMonthsMinusDays)*365.25)/12);
+    let yearsAndMonths = timeInMonthsMinusDays/12;
+    let years = parseInt(yearsAndMonths);
+    let months = parseInt((yearsAndMonths - years)*12);
+
+    return [years, months, days, hours, minutes, seconds];
+
+}
+
 exp.dayDifference = dayDifference;
 exp.decToBinary = decToBinary;
+exp.secondsToTimeArray = secondsToTimeArray;

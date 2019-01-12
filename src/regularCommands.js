@@ -107,72 +107,32 @@ function osu(message, args) {
             user = helpers.getUsername(args, 2);
             osuCommands.register(message, user, force);
             break;
+
         case "recent":
             user = helpers.getUsername(args, 1);
-
-            if (user == null) {
-                let db = osuDB.connect();
-                db.once("open", async function () {
-                    let query;
-                    try {
-                        query = osuDB.User.findOne({_id: message.author.id});
-                    } catch (err) {
-                        console.error(err);
-                        return;
-                    }
-
-                    query.exec(async function (err, userRet) {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
-                        let uR = await userRet;
-                        if (uR != null) {
-                            osuCommands.recent(message, uR.osu);
-                        } else {
-                            message.channel.send("You are not registered! Use !osu register for more info.");
-                        }
-                    });
-
-                });
+            if(user == null) {
+                osuDB.handleRequest(message, osuCommands.recent);
                 break;
             }
-
             osuCommands.recent(message, user);
             break;
 
         case "best":
             user = helpers.getUsername(args, 1);
-
-            if (user == null) {
-                let db = osuDB.connect();
-                db.once("open", async function () {
-                    let query;
-                    try {
-                        query = osuDB.User.findOne({_id: message.author.id});
-                    } catch (err) {
-                        console.error(err);
-                        return;
-                    }
-
-                    query.exec(async function (err, userRet) {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
-                        let uR = await userRet;
-                        if (uR != null) {
-                            osuCommands.best(message, uR.osu);
-                        } else {
-                            message.channel.send("You are not registered! Use !osu register for more info.");
-                        }
-                    });
-
-                });
+            if(user == null) {
+                osuDB.handleRequest(message, osuCommands.best);
                 break;
             }
-
             osuCommands.best(message, user);
+            break;
+
+        case "wasted":
+            user = helpers.getUsername(args, 1);
+            if(user == null){
+                osuDB.handleRequest(message, osuCommands.wasted);
+                break;
+            }
+            osuCommands.wasted(message, user);
             break;
     }
 }
