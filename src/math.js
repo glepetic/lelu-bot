@@ -47,6 +47,18 @@ function secondsToTimeArray(timeInSeconds){
 
 }
 
+function secondsSinceDate(date) {
+    let now = new Date();
+    //now.setHours(now.getHours() + 3);
+    let d = new Date(date);
+
+    let timeDiff = Math.abs(now.getTime() - d.getTime());
+    let diffSeconds = Math.ceil(timeDiff / 1000);
+    return diffSeconds;
+}
+
+
 exp.dayDifference = dayDifference;
 exp.decToBinary = decToBinary;
 exp.secondsToTimeArray = secondsToTimeArray;
+exp.secondsSinceDate = secondsSinceDate;

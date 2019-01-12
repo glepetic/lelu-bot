@@ -5,27 +5,6 @@ const textFormat = require("../discord/textFormat.js");
 
 const exp = module.exports;
 
-function generateTimeFooter(hours, minutes) {
-    let footer;
-    if (hours === 0 && minutes === 0) {
-        footer = "Just now";
-        return footer;
-    } else if (hours === 0) {
-        footer = minutes + " minute";
-        footer = minutes === 1 ? footer : footer + "s";
-    } else if (minutes === 0) {
-        footer = hours + " hour";
-        footer = hours === 1 ? footer : footer + "s";
-    } else {
-        footer = hours + " hour";
-        footer = hours === 1 ? footer : footer + "s";
-        footer = footer + " and " + minutes + " minute";
-        footer = minutes === 1 ? footer : footer + "s";
-    }
-    footer = footer + " ago";
-    return footer;
-}
-
 function determinateRank(rank) {
     switch (rank) {
         case "A" :
@@ -112,5 +91,4 @@ function generatePlayEmbed(userProfile, url, bmpTitle, bmpVersion, bmpHDID, play
 
 exp.generateModsString = generateModsString;
 exp.determinateRank = determinateRank;
-exp.generateTimeFooter = generateTimeFooter;
 exp.generatePlayEmbed = generatePlayEmbed;

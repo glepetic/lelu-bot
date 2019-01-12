@@ -55,6 +55,10 @@ function recent(message, user) {
                                 let maxCombo = lastScore["maxcombo"];
                                 let usedMods = lastScore["enabled_mods"];
 
+                                let secondsSincePlay = math.secondsSinceDate(lastScore.date);
+                                let timeSincePlay = math.secondsToTimeArray(secondsSincePlay);
+                                let timeSincePlayString = helpers.generateTimeString(timeSincePlay);
+
                                 osuApi.getScores(lastScore["beatmap_id"], user,
                                     function (err, bmpScores) {
 
@@ -62,35 +66,17 @@ function recent(message, user) {
 
                                         let score = bmpScores.filter(scr => scr.date === lastScore.date).shift();
                                         if (score != null) {
-                                            ppGain = textFormat.boldString(" +" + Math.round(score.pp) + "pp");
+                                            ppGain = " +" + Math.round(score.pp) + "pp";
                                         }
 
-                                        let embed = new bot.discord.RichEmbed();
-                                        embed.setTitle("__**" + beatMap.title + " [" + beatMap.version + "]" + "**__");
-                                        embed.setURL(url);
-                                        embed.setThumbnail("https://b.ppy.sh/thumb/" + splitID[0] + "l.jpg");
-                                        embed.addField("Rank & PP", osuHelpers.determinateRank(lastScore.rank) + ppGain, true);
-                                        embed.addField("Accuracy", textFormat.boldString(Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%"), true);
-                                        embed.addField("Score", textFormat.boldString(helpers.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")"), true);
-                                        embed.addField("Player", "[" + username + "](https://osu.ppy.sh/users/" + lastScore["user_id"] + ")", true);
-                                        embed.addField("Difficulty", textFormat.boldString(Math.round(beatMap["difficultyrating"] * 100) / 100 + "★"), true);
-                                        let modsString = osuHelpers.generateModsString(usedMods);
-                                        let boldMods = textFormat.boldString(modsString);
-                                        embed.addField("Mods", boldMods, true);
-                                        embed.addField("Hits",
-                                            "<:hit300sb:532754291199442964> " + count300s + " "
-                                            + "<:hitgekisb:532764843648876554>" + countGeki + "\n"
-                                            + "<:hit100sb:532754307897098240> " + count100s + " "
-                                            + "<:hitkatusb:532764853270741002>" + countKatu + "\n"
-                                            + "<:hit50sb:532754317808238615> " + count50s + " "
-                                            + "<:hit0sb:532754325467037696> " + countmiss
-                                            , true);
-                                        embed.addField("Download", "[Link](https://osu.ppy.sh/d/" + splitID[0] + ")", true);
-                                        let minSincePlay = osuMath.calculateTimeSincePlay(lastScore.date);
-                                        let hours = parseInt(minSincePlay / 60);
-                                        let minutes = minSincePlay - hours * 60;
-                                        let footer = osuHelpers.generateTimeFooter(hours, minutes);
-                                        embed.setFooter(footer);
+                                        let embed = osuHelpers.generatePlayEmbed(
+                                            "[" + username + "](https://osu.ppy.sh/users/" + lastScore["user_id"] + ")", url,
+                                            beatMap.title, beatMap.version, splitID[0], osuHelpers.determinateRank(lastScore.rank), ppGain,
+                                            Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%",
+                                            helpers.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")",
+                                            lastScore.date, Math.round(beatMap["difficultyrating"] * 100) / 100 + "★",
+                                            osuHelpers.generateModsString(usedMods), count300s, count100s, count50s, countmiss, countGeki, countKatu,
+                                            timeSincePlayString + " ago");
 
                                         message.channel.send(embed);
 
@@ -219,9 +205,9 @@ function best(message, user) {
                                 let maxCombo = bestScore["maxcombo"];
                                 let usedMods = bestScore["enabled_mods"];
 
-                                let minSincePlay = osuMath.calculateTimeSincePlay(bestScore.date);
-                                let hours = parseInt(minSincePlay / 60);
-                                let minutes = minSincePlay - hours * 60;
+                                let secondsSincePlay = math.secondsSinceDate(bestScore.date);
+                                let timeSincePlay = math.secondsToTimeArray(secondsSincePlay);
+                                let timeSincePlayString = helpers.generateTimeString(timeSincePlay);
 
                                 let embed = osuHelpers.generatePlayEmbed(
                                     "[" + username + "](https://osu.ppy.sh/users/" + bestScore["user_id"] + ")", url,
@@ -232,7 +218,7 @@ function best(message, user) {
                                     bestScore.date, Math.round(beatMap["difficultyrating"] * 100) / 100 + "★",
                                     osuHelpers.generateModsString(usedMods),
                                     count300s, count100s, count50s, countmiss, countGeki, countKatu,
-                                    osuHelpers.generateTimeFooter(hours, minutes));
+                                    timeSincePlayString + " ago");
 
                                 message.channel.send(embed);
 
