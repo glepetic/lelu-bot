@@ -4,7 +4,7 @@ const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
 const osuDB = require(".././db/osuDB.js");
-const textFormat = require("../discord/markdown.js");
+const markdown = require("../discord/markdown.js");
 const math = require(".././math.js");
 
 
@@ -243,7 +243,7 @@ function wasted(message, user){
             let timeWasted = math.secondsToTimeArray(secondsPlayed);
             let timeWastedString = helpers.generateTimeString(timeWasted);
 
-            message.channel.send(textFormat.boldString(username) + " has wasted " + timeWastedString + " playing osu!");
+            message.channel.send(markdown.bold(username) + " has wasted " + timeWastedString + " playing osu!");
 
         });
 }
