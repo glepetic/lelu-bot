@@ -1,11 +1,5 @@
 const exp = module.exports;
 
-function dayDifference(startDate, endDate) {
-    let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return diffDays;
-}
-
 function decToBinary(decimalNumber) {
     let binaryNumber = new Array();
 
@@ -58,7 +52,6 @@ function secondsSinceDate(date) {
 }
 
 
-exp.dayDifference = dayDifference;
 exp.decToBinary = decToBinary;
 exp.secondsToTimeArray = secondsToTimeArray;
 exp.secondsSinceDate = secondsSinceDate;

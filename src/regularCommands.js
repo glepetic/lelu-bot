@@ -139,23 +139,24 @@ function osu(message, args) {
 
 function age(message) {
     let mentionedUser = message.mentions.users.first();
-    let now = new Date();
+    let seconds;
+    let time;
     let age;
     let reply;
     if (mentionedUser == null) {
         let recipient = message.channel.recipient;
         if (message.channel.recipient != null) {
             let userCreation = recipient.createdAt;
-            age = math.dayDifference(userCreation, now);
+            seconds = math.secondsSinceDate(userCreation);
             reply = "Your user ";
         } else {
             let guildCreation = message.guild.createdAt;
-            age = math.dayDifference(guildCreation, now);
+            seconds = math.secondsSinceDate(guildCreation);
             reply = "The server ";
         }
     } else {
         let userCreation = mentionedUser.createdAt;
-        age = math.dayDifference(userCreation, now);
+        seconds = math.secondsSinceDate(userCreation);
         if (mentionedUser.id == new bot.bigNumbers.Big("525097268764737536")) {
             reply = "I ";
         } else if (mentionedUser.id == message.author.id) {
@@ -164,14 +165,11 @@ function age(message) {
             reply = mentionedUser.toString() + " ";
         }
     }
-    let ageInYears = age / 365.25;
-    let years = parseInt(ageInYears);
-    let ageMinusYearsInMonths = (ageInYears - years) * 12;
-    let months = parseInt(ageMinusYearsInMonths);
-    let ageMinusYearsAndMonthsInDays = (ageMinusYearsInMonths - months) * 365.25 / 12;
-    let days = parseInt(ageMinusYearsAndMonthsInDays);
 
-    reply = reply + "was created " + years + " years, " + months + " months and " + days + " days ago";
+    time = math.secondsToTimeArray(seconds);
+    age = helpers.generateTimeString(time);
+
+    reply = reply + "was created " + age + " ago";
 
     message.channel.send(reply);
 
