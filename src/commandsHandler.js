@@ -2,9 +2,6 @@ const bot = require(".././bot.js");
 const adminCommands = require("./adminCommands.js");
 const regularCommands = require("./regularCommands.js");
 const helpers = require("./helpers.js");
-const ownerCommands = require("./ownerCommands.js");
-
-const exp = module.exports;
 
 
 function executeCommand(message, args) {
@@ -76,5 +73,5 @@ function executeAdminCommand(message, args) {
     }
 }
 
-exp.executeCommand = executeCommand;
-exp.executeAdminCommand = executeAdminCommand;
+exports.executeCommand = executeCommand;
+exports.executeAdminCommand = executeAdminCommand;

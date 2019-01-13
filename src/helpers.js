@@ -1,7 +1,5 @@
 const bot = require(".././bot.js");
 
-const exp = module.exports;
-
 function checkArguments(message, args) {
     if (args[1] != null) {
         message.channel.send("This command doesn't take any arguments!");
@@ -143,10 +141,10 @@ function generateTimeString(timeArray){
 
 }
 
-exp.getUsername = getUsername;
-exp.getDMPref = getDMPref;
-exp.setDMPref = setDMPref;
-exp.checkArguments = checkArguments;
-exp.stringifyNumber = stringifyNumber;
-exp.verifyAdmin = verifyAdmin;
-exp.generateTimeString = generateTimeString;
+exports.getUsername = getUsername;
+exports.getDMPref = getDMPref;
+exports.setDMPref = setDMPref;
+exports.checkArguments = checkArguments;
+exports.stringifyNumber = stringifyNumber;
+exports.verifyAdmin = verifyAdmin;
+exports.generateTimeString = generateTimeString;

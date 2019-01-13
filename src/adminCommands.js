@@ -1,4 +1,3 @@
-const exp = module.exports;
 
 function purge(message, qty) {
     let messages = message.channel.messages.array();
@@ -33,4 +32,4 @@ function purge(message, qty) {
     message.channel.send("A total of " + totalDeleted.toString() + " messages were deleted.");
 }
 
-exp.purge = purge;
+exports.purge = purge;

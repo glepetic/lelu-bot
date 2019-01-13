@@ -1,4 +1,3 @@
-const exp = module.exports;
 
 function decToBinary(decimalNumber) {
     let binaryNumber = new Array();
@@ -52,6 +51,6 @@ function secondsSinceDate(date) {
 }
 
 
-exp.decToBinary = decToBinary;
-exp.secondsToTimeArray = secondsToTimeArray;
-exp.secondsSinceDate = secondsSinceDate;
+exports.decToBinary = decToBinary;
+exports.secondsToTimeArray = secondsToTimeArray;
+exports.secondsSinceDate = secondsSinceDate;

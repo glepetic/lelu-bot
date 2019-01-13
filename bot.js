@@ -7,22 +7,20 @@ const mongo = require("mongoose");
 const mongoLong = require("mongodb").Long;
 require("mongoose-long")(mongo);
 
-const exp = module.exports;
-
-exp.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
-exp.startTime = new Date();
-exp.mongoose = mongo;
-exp.mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/";
-exp.Long = mongoLong;
-exp.client = new Discord.Client();
-exp.discord = Discord;
-exp.request = req;
-exp.bigNumbers = big;
-exp.appRoot = __dirname;
-exp.fs = fsFunc;
+exports.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
+exports.startTime = new Date();
+exports.mongoose = mongo;
+exports.mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/";
+exports.Long = mongoLong;
+exports.client = new Discord.Client();
+exports.discord = Discord;
+exports.request = req;
+exports.bigNumbers = big;
+exports.appRoot = __dirname;
+exports.fs = fsFunc;
 
 //databases init
-require("./src/db/osuDB.js").init();
+require("./src/db/osuDB.js").init;
 
 const bot = require("./bot.js");
 const config = require("./settings/config.json");

@@ -4,10 +4,8 @@ const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
 const osuDB = require(".././db/osuDB.js");
-const textFormat = require(".././discord/textFormat.js");
+const textFormat = require("../discord/markdown.js");
 const math = require(".././math.js");
-
-const exp = module.exports;
 
 
 function recent(message, user) {
@@ -62,7 +60,7 @@ function recent(message, user) {
                                 osuApi.getScores(lastScore["beatmap_id"], user,
                                     function (err, bmpScores) {
 
-                                        let ppGain = "";
+                                        let ppGain = null;
 
                                         let score = bmpScores.filter(scr => scr.date === lastScore.date).shift();
                                         if (score != null) {
@@ -250,7 +248,7 @@ function wasted(message, user){
         });
 }
 
-exp.recent = recent;
-exp.register = register;
-exp.best = best;
-exp.wasted = wasted;
+exports.recent = recent;
+exports.register = register;
+exports.best = best;
+exports.wasted = wasted;

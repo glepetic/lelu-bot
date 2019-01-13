@@ -1,7 +1,6 @@
 const bot = require(".././bot.js");
 
 const client = bot.client;
-const exp = module.exports;
 
 function replyToMessage(message) {
 
@@ -53,4 +52,4 @@ function replyToMessage(message) {
 
 }
 
-exp.replyToMessage = replyToMessage;
+exports.replyToMessage = replyToMessage;

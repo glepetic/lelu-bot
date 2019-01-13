@@ -1,4 +1,3 @@
-const exp = module.exports;
 
 const names = [
     "NF",
@@ -34,4 +33,4 @@ const names = [
     "Last Mod",
 ];
 
-exp.names = names;
+exports.names = names;

@@ -1,4 +1,3 @@
-const exp = module.exports;
 
 
 function calculateAccuracy(count50s, count100s, count300s, countMiss) {
@@ -8,4 +7,4 @@ function calculateAccuracy(count50s, count100s, count300s, countMiss) {
 
 
 
-exp.calculateAccuracy = calculateAccuracy;
+exports.calculateAccuracy = calculateAccuracy;

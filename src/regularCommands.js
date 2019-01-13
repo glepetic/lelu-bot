@@ -5,7 +5,6 @@ const helpers = require("./helpers.js");
 const math = require("./math.js");
 const osuDB = require("./db/osuDB.js");
 
-const exp = module.exports;
 
 function requests(message) {
     let embed = new bot.discord.RichEmbed();
@@ -191,12 +190,12 @@ function help(message) {
 
 }
 
-exp.requests = requests;
-exp.worms = worms;
-exp.gay = gay;
-exp.age = age;
-exp.p = p;
-exp.osu = osu;
-exp.dm = dm;
-exp.help = help;
+exports.requests = requests;
+exports.worms = worms;
+exports.gay = gay;
+exports.age = age;
+exports.p = p;
+exports.osu = osu;
+exports.dm = dm;
+exports.help = help;
 
