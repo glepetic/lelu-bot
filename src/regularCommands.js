@@ -202,6 +202,7 @@ function roll(message, limit) {
     message.channel.send("You have rolled " + points + " points!");
 }
 
+
 exports.requests = requests;
 exports.worms = worms;
 exports.gay = gay;

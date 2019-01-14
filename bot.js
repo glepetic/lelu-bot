@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const osu = require("osu-api");
 const req = require("request");
-const fsFunc = require("fs");
 const Big = require("big.js");
 const mongo = require("mongoose");
 const mongoLong = require("mongodb").Long;
 require("mongoose-long")(mongo);
+const giphy = require("giphy-api")("eorufO1ywQLZqjiHbk2vpBcw95hYAsDx");
 
 
 exports.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
@@ -17,7 +17,7 @@ exports.discord = Discord;
 exports.request = req;
 exports.bigNumbers = Big;
 exports.appRoot = __dirname;
-exports.fs = fsFunc;
+exports.giphy = giphy;
 
 //databases init
 require("./src/amadeus/db.js").init;
@@ -26,6 +26,7 @@ const bot = require("./bot.js");
 const config = require("./settings/config.json");
 const commandsHandler = require("./src/commandsHandler.js");
 const nonCommandsHandler = require("./src/nonCommandsHandler.js");
+const markdown = require("./src/discord/markdown.js");
 
 // Set the prefix
 const prefix = config.prefix;
@@ -47,13 +48,20 @@ bot.client.on('ready', () => {
 });
 
 
-bot.client.on("guildCreate", (guild) => {
+bot.client.on("guildCreate", guild => {
     bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
-    //TODO join message
+    let defaultChannel = guild.channels.filter(channel => channel.type === "text").first();
+    defaultChannel.send("Hello! Thanks for inviting me <a:wobblesb:528743238035570710>");
+    defaultChannel.send("Use !help if you need command information.");
 });
 
 bot.client.on("guildDelete", (guild) => {
     bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+});
+
+bot.client.on("guildMemberAdd", member =>{
+   let defaultChannel = member.guild.channels.filter(channel => channel.type === "text").first();
+   defaultChannel.send("Some noob called " + markdown.bold(member.displayName) + " has appeared!");
 });
 
 bot.client.on("message", (message) => {

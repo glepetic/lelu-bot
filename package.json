@@ -4,8 +4,8 @@
   "version": "1.0.3",
   "main": "bot.js",
   "author": "Gonzalo Lepetic",
-  "scripts" : {
-	"start" : "node bot.js"
+  "scripts": {
+    "start": "node bot.js"
   },
   "dependencies": {
     "assert": "^1.4.1",
@@ -15,6 +15,7 @@
     "ffmpeg": "0.0.4",
     "ffmpeg-binaries": "^4.0.0",
     "fs": "0.0.1-security",
+    "giphy-api": "^2.0.1",
     "jsonplaceholder": "^0.3.3",
     "libsodium-wrappers": "^0.7.3",
     "module-js": "^7.0.1",

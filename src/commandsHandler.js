@@ -2,6 +2,7 @@ const bot = require(".././bot.js");
 const adminCommands = require("./adminCommands.js");
 const regularCommands = require("./regularCommands.js");
 const helpers = require("./helpers.js");
+const giphy = require("./giphy/giphy.js");
 
 
 function executeCommand(message, args) {
@@ -63,6 +64,23 @@ function executeCommand(message, args) {
             if(!helpers.checkNull(message, args[2])) break;
             regularCommands.roll(message, limit);
             break;
+        case "kiss" :
+            let kissed = args[1];
+            if(kissed == null){
+                message.channel.send("Looks like you have no one to kiss, heh, sad life.");
+                return;
+            }
+            if(!helpers.checkNull(message, args[2])) break;
+            giphy.kiss(message, kissed);
+            break;
+        case "hug" :
+            let hugged = args[1];
+            if(hugged == null){
+                message.channel.send("Looks like you have no one to hug, heh, sad life.");
+                return;
+            }
+            if(!helpers.checkNull(message, args[2])) break;
+            giphy.hug(message, hugged);
     }
 }
 

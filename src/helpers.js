@@ -10,7 +10,7 @@ function checkNull(message, element) {
 function checkNonMentions(message, args, start) {
     let i;
     for (i = start; i < args.length; i++) {
-        if (!(args[i].toString().includes("@"))) {
+        if (!(args[i].toString().includes("<@"))) {
             message.channel.send("This command has invalid arguments. Please use !help for more information.");
             return false;
         }
@@ -36,42 +36,6 @@ function getUsername(args, start) {
 function verifyAdmin(message) {
     if (message.member.roles.some(role => role.hasPermission("ADMINISTRATOR"))) return true;
     return false;
-}
-
-
-function getDMPref(userId) {
-
-    let path = bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
-    let rawdata;
-    let value;
-    try {
-        rawdata = bot.fs.readFileSync(path);
-        let jsonFile = JSON.parse(rawdata);
-        value = jsonFile.enabled;
-    } catch (err) {
-        let newJson = {
-            enabled: true
-        };
-
-        let data = JSON.stringify(newJson);
-        bot.fs.writeFileSync(path, data, {flag: 'w'});
-        value = newJson.enabled;
-    }
-
-    return value;
-
-}
-
-
-function setDMPref(userId, pref) {
-
-    let path = bot.appRoot + "/public/userPreferences/dm/" + userId + ".json";
-    let rawdata = bot.fs.readFileSync(path);
-    let jsonFile = JSON.parse(rawdata);
-    jsonFile.enabled = pref;
-    let changedData = JSON.stringify(jsonFile);
-    bot.fs.writeFileSync(path, changedData);
-
 }
 
 
@@ -150,13 +114,16 @@ function generateTimeString(timeArray) {
 function getCommands() {
 
     let requests = markdown.bold("requests:") + "\n!requests\n" + "Links a document to request additions to the bot.\n\n";
+    let dm = markdown.bold("dm:") + "\n!dm [enable | disable]\n" + "Enables or disables the bot's ability to send you direct messages.\n\n";
     let osu = markdown.bold("osu:") + "\n!osu [command]\n" + "Obtains information from the osu api. Use !osu help for more information.\n\n";
     let age = markdown.bold("age:") + "\n!age <mentions>\n" + "Shows how long since the creation of the discord account of mentions. If no mentions, defaults to the server where the message was sent.\n\n";
     let uptime = markdown.bold("uptime:") + "\n!uptime\n" + "Displays how long the bot has been online for.\n\n";
     let roll = markdown.bold("roll:") + "\n!roll <limit>\n" + "Rolls a number between 0 and limit. Limit must be a number. If no limit, defaults to 100.\n\n";
     let gay = markdown.bold("gay:") + "\n!gay <mentions>\n" + "DMs the mentions, maximum mentions is 5. If no mentions, random user is selected.\n\n";
     let p = markdown.bold("p:") + "\n!p [thing1] [thing2]\n" + "Generates a random % between 0 and 100 'p' and replies 'thing2 is p% thing1'\n\n";
-    return requests + osu + age + uptime + roll + p + gay;
+    let kiss = markdown.bold("kiss:") + "\n!kiss [mention]\n" + "Sends a GIF of a kiss to the person mentioned.\n\n";
+    let hug = markdown.bold("hug:") + "\n!hug [mention]\n" + "Sends a GIF of a hug to the person mentioned.\n\n";
+    return requests + dm + osu + age + uptime + roll + p + gay + kiss + hug;
 }
 
 function getAdminCommands(){
@@ -174,8 +141,6 @@ function getKey(){
 }
 
 exports.getUsername = getUsername;
-exports.getDMPref = getDMPref;
-exports.setDMPref = setDMPref;
 exports.checkNull = checkNull;
 exports.checkNonMentions = checkNonMentions;
 exports.stringifyNumber = stringifyNumber;

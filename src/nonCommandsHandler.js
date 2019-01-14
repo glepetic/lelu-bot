@@ -27,13 +27,12 @@ function replyToMessage(message) {
         message.channel.send("<:shorosb:528315164592832533>");
     }
 
-    if (content.includes("bot")
-        || content.includes("wobble")) {
+    if (content.includes("dance")) {
         message.channel.send("<a:wobblesb:528743238035570710>");
     }
 
     if (content.includes("yay")
-        || content.includes("dance")) {
+        || content.includes("party")) {
         message.channel.send("<a:jedipepesb:528698799187558421>");
     }
 
