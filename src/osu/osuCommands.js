@@ -3,10 +3,24 @@ const osuApi = bot.osuApi;
 const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
-const osuDB = require(".././db/osuDB.js");
+const dbLib = require("../amadeus/db.js");
+const osuDB = require(".././amadeus/osuDB.js");
 const markdown = require("../discord/markdown.js");
 const math = require(".././math.js");
 
+
+function help(message){
+    let embed = new bot.discord.RichEmbed();
+    embed.setTitle("Amadeus Osu Help");
+    embed.setDescription("Here is a list of osu related commands that are available to everyone.");
+    embed.setColor(13977185);
+    embed.setThumbnail(bot.client.user.displayAvatarURL);
+    embed.addField("Key", helpers.getKey());
+    embed.addField("Commands", osuHelpers.getCommands());
+    embed.setFooter("Created by " + bot.owner.user.tag, bot.owner.user.displayAvatarURL);
+    embed.setTimestamp(bot.client.user.createdAt);
+    message.author.send(embed);
+}
 
 function recent(message, user) {
 
@@ -90,76 +104,23 @@ function recent(message, user) {
 
 }
 
-function register(message, user, force) {
-    let discordUserId = message.author.id;
-
-    bot.mongoose.connect(bot.mongoURL + "osu", {useNewUrlParser: true});
-    let db = bot.mongoose.connection;
-
-    db.on("error", console.error.bind(console, 'connection error:'));
-    db.once("open", async function () {
-
-        let User = osuDB.User;
-
-        let query;
-
-        try {
-            query = User.findOne({_id: discordUserId});
-        } catch (err) {
-            console.error(err);
+function register(message, user) {
+    if (user == null) {
+        message.channel.send("Please indicate the username to register.");
+        return;
+    }
+    osuApi.getUser(user, async function (err, osuUser) {
+        if (err) {
+            console.log(err);
+            return;
         }
-
-        query.exec(function (err, userRet) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            if (userRet == null || force) {
-
-                if (user == null) {
-                    message.channel.send("Please indicate the username to register");
-                    return;
-                }
-
-                osuApi.getUser(user, async function (err, osuUser) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    if (await osuUser == null) {
-                        message.channel.send("Only valid osu usernames are allowed!");
-                        return;
-                    }
-
-                    if (userRet != null) {
-                        User.updateOne({_id: discordUserId},
-                            {$set: {osu: user}},
-                            function (err, result) {
-                                if (err) {
-                                    console.error(err);
-                                    return;
-                                }
-                                message.channel.send("Done!");
-                                db.close();
-                            });
-                        return;
-                    }
-
-                    osuDB.registerOnDB(message, discordUserId, user);
-
-                });
-
-                return;
-            }
-
-            message.channel.send("You are already registered as " + textFormat.boldString(userRet.osu) + ". Use '!osu register -f <user>' to change your user associated.");
-
-
-        });
-
+        if (await osuUser == null) {
+            message.channel.send("Only valid osu usernames are allowed!");
+            return;
+        }else{
+            osuDB.registerOsuUser(message, user);
+        }
     });
-
 }
 
 function best(message, user) {
@@ -230,7 +191,7 @@ function best(message, user) {
 
 }
 
-function wasted(message, user){
+function wasted(message, user) {
     osuApi.getUser(user,
         async function (err, userJSON) {
             if (userJSON == null) {
@@ -252,3 +213,4 @@ exports.recent = recent;
 exports.register = register;
 exports.best = best;
 exports.wasted = wasted;
+exports.help = help;

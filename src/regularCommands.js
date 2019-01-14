@@ -1,9 +1,9 @@
 const bot = require(".././bot.js");
 const osuCommands = require("./osu/osuCommands.js");
-const osuHelpers = require("./osu/helpers.js");
+const markdown = require("./discord/markdown.js");
 const helpers = require("./helpers.js");
 const math = require("./math.js");
-const osuDB = require("./db/osuDB.js");
+const osuDB = require("./amadeus/osuDB.js");
 
 
 function requests(message) {
@@ -85,31 +85,18 @@ function osu(message, args) {
     let cmd = args[0];
     let user;
     switch (cmd) {
+        case "help":
+            if(!helpers.checkNull(message, args[1])) break;
+            osuCommands.help(message);
+            break;
         case "register":
-            if (args[1] == null) {
-                message.channel.send("Please follow template: !osu register < -f | -n > <username>");
-                return;
-            }
-            let flag = args[1].substring(1);
-            let force;
-            switch (flag) {
-                case "f" :
-                    force = true;
-                    break;
-                case "n" :
-                    force = false;
-                    break;
-                default :
-                    message.channel.send("Please follow template: !osu register < -f | -n > <username>");
-                    return;
-            }
-            user = helpers.getUsername(args, 2);
-            osuCommands.register(message, user, force);
+            user = helpers.getUsername(args, 1);
+            osuCommands.register(message, user);
             break;
 
         case "recent":
             user = helpers.getUsername(args, 1);
-            if(user == null) {
+            if (user == null) {
                 osuDB.handleRequest(message, osuCommands.recent);
                 break;
             }
@@ -118,7 +105,7 @@ function osu(message, args) {
 
         case "best":
             user = helpers.getUsername(args, 1);
-            if(user == null) {
+            if (user == null) {
                 osuDB.handleRequest(message, osuCommands.best);
                 break;
             }
@@ -127,7 +114,7 @@ function osu(message, args) {
 
         case "wasted":
             user = helpers.getUsername(args, 1);
-            if(user == null){
+            if (user == null) {
                 osuDB.handleRequest(message, osuCommands.wasted);
                 break;
             }
@@ -137,7 +124,8 @@ function osu(message, args) {
 }
 
 function age(message) {
-    let mentionedUser = message.mentions.users.first();
+    let mentionedUsers = message.mentions.users;
+    let mentionedUser = mentionedUsers.first();
     let seconds;
     let time;
     let age;
@@ -153,24 +141,36 @@ function age(message) {
             seconds = math.secondsSinceDate(guildCreation);
             reply = "The server ";
         }
+
+        time = math.secondsToTimeArray(seconds);
+        age = helpers.generateTimeString(time);
+
+        reply = reply + "was created " + age + " ago";
+
+        message.channel.send(reply);
     } else {
-        let userCreation = mentionedUser.createdAt;
-        seconds = math.secondsSinceDate(userCreation);
-        if (mentionedUser.id == new bot.bigNumbers.Big("525097268764737536")) {
-            reply = "I ";
-        } else if (mentionedUser.id == message.author.id) {
-            reply = "Your user ";
-        } else {
-            reply = mentionedUser.toString() + " ";
-        }
+        mentionedUsers.forEach(user => {
+            let userCreation = user.createdAt;
+            seconds = math.secondsSinceDate(userCreation);
+            if (user.id == new bot.bigNumbers.Big("525097268764737536")) {
+                reply = "I ";
+            } else if (user.id == message.author.id) {
+                reply = "Your user ";
+            } else {
+                reply = user.toString() + " ";
+            }
+
+            time = math.secondsToTimeArray(seconds);
+            age = helpers.generateTimeString(time);
+
+            reply = reply + "was created " + age + " ago";
+
+            message.channel.send(reply);
+
+        });
+
     }
 
-    time = math.secondsToTimeArray(seconds);
-    age = helpers.generateTimeString(time);
-
-    reply = reply + "was created " + age + " ago";
-
-    message.channel.send(reply);
 
 }
 
@@ -181,13 +181,34 @@ function p(message, text, user) {
 
 function help(message) {
     let embed = new bot.discord.RichEmbed();
-    embed.setTitle("Commands");
-    embed.addField("!osu recent -username-", "Brings the most recent play by the user");
-    embed.addField("!gay:", "nothing else to say.");
-    embed.addField("!age:", "check your server/user age!");
-    embed.addField("!p:", "rng number from 0-100");
-    message.channel.send(embed);
+    embed.setTitle("Amadeus Help");
+    embed.setDescription("Amadeus provides a wide range of functionality including commands for rng, gifs, voice, league of legends, osu and more!");
+    embed.setColor(13977185);
+    embed.setThumbnail(bot.client.user.displayAvatarURL);
+    embed.addField("Key", helpers.getKey());
+    embed.addField("Commands", helpers.getCommands());
+    embed.setFooter("Created by " + bot.owner.user.tag, bot.owner.user.displayAvatarURL);
+    embed.setTimestamp(bot.client.user.createdAt);
+    message.author.send(embed);
 
+}
+
+function uptime(message) {
+    let seconds = math.secondsSinceDate(bot.startTime);
+    let time = math.secondsToTimeArray(seconds);
+    let uptime = helpers.generateTimeString(time);
+    message.channel.send("I have been online for " + uptime);
+}
+
+function roll(message, limit) {
+    if (limit == null) limit = 100;
+    let range = parseInt(limit);
+    if (isNaN(range)) {
+        message.channel.send(markdown.bold(limit) + " is not a number!");
+        return;
+    }
+    let points = Math.round(Math.random() * range);
+    message.channel.send("You have rolled " + points + " points!");
 }
 
 exports.requests = requests;
@@ -198,4 +219,5 @@ exports.p = p;
 exports.osu = osu;
 exports.dm = dm;
 exports.help = help;
-
+exports.uptime = uptime;
+exports.roll = roll;

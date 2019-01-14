@@ -8,16 +8,16 @@ function executeCommand(message, args) {
     let cmd = args[0];
     switch (cmd) {
         case "requests" :
-            if (helpers.checkArguments(message, args)) break;
+            if (!helpers.checkNull(message, args[1])) break;
             regularCommands.requests(message);
             break;
         case "worms" :
-            if (helpers.checkArguments(message, args)) break;
+            if (!helpers.checkNull(message, args[1])) break;
             regularCommands.worms(message);
             break;
         case "gay" :
             if (message.mentions.users.first() == null && args[1] != null) {
-                message.channel.send("This command only takes mentions");
+                message.channel.send("This command only takes mentions.");
                 break;
             }
             regularCommands.gay(message);
@@ -33,11 +33,14 @@ function executeCommand(message, args) {
         case "osu" :
             args.shift();
             regularCommands.osu(message, args);
+            args.unshift("osu");
             break;
         case "uptime" :
-            //TODO
+            if(!helpers.checkNull(message, args[1])) break;
+            regularCommands.uptime(message);
             break;
         case "age" :
+            if(!helpers.checkNonMentions(message, args, 1)) break;
             regularCommands.age(message);
             break;
         case "p" :
@@ -50,12 +53,17 @@ function executeCommand(message, args) {
             regularCommands.p(message, text, user);
             break;
         case "help" :
+            if(!helpers.checkNull(message, args[1])) break;
             regularCommands.help(message);
             break;
         case "gnome" :
             message.channel.send("https://www.youtube.com/watch?v=6n3pFFPSlW4");
             break;
-
+        case "roll" :
+            let limit = args[1];
+            if(!helpers.checkNull(message, args[2])) break;
+            regularCommands.roll(message, limit);
+            break;
     }
 }
 
@@ -63,13 +71,17 @@ function executeAdminCommand(message, args) {
     let cmd = args[0];
     switch (cmd) {
         case "purge":
-            if (!helpers.verifyAdmin(message)) return;
+            if (!helpers.verifyAdmin(message)) break;
             let qty = args[1];
             adminCommands.purge(message, qty);
             break;
-
+        case "help":
+            if(!helpers.verifyAdmin(message) || args[1] != null){
+                break;
+            }
+            adminCommands.help(message);
         default:
-            return;
+            break;
     }
 }
 

@@ -69,6 +69,7 @@ function generatePlayEmbed(userProfile, url, bmpTitle, bmpVersion, bmpHDID, play
     embed.setTitle(markdown.underlineBold(bmpTitle + " [" + bmpVersion + "]"));
     embed.setURL(url);
     embed.setThumbnail("https://b.ppy.sh/thumb/" + bmpHDID + "l.jpg");
+    embed.setColor(12663939);
     embed.addField("Rank & PP", playRank + pp, true);
     embed.addField("Accuracy", markdown.bold(playAccuracy), true);
     embed.addField("Score", markdown.bold(playScore), true);
@@ -90,6 +91,15 @@ function generatePlayEmbed(userProfile, url, bmpTitle, bmpVersion, bmpHDID, play
 
 }
 
+function getCommands(){
+    let register = markdown.bold("register:") + "\n!osu register [osu user]\n" + "Links your osu username to your discord user.\n\n";
+    let recent = markdown.bold("recent:") + "\n!osu recent <username>\n" + "Displays the recent play by the player 'username'. Can avoid typing username if already registered.\n\n";
+    let best = markdown.bold("best:") + "\n!osu best <username>\n" + "Displays the best play by the player 'username'. Can avoid typing username if already registered.\n\n";
+    let wasted = markdown.bold("wasted:") + "\n!osu wasted <username>\n" + "Displays the time wasted playing osu! for the player 'username'. Can avoid typing username if already registered.\n\n";
+    return register + recent + best + wasted;
+}
+
 exports.generateModsString = generateModsString;
 exports.determinateRank = determinateRank;
 exports.generatePlayEmbed = generatePlayEmbed;
+exports.getCommands = getCommands;

@@ -1,11 +1,22 @@
 const bot = require(".././bot.js");
+const markdown = require("./discord/markdown.js");
 
-function checkArguments(message, args) {
-    if (args[1] != null) {
-        message.channel.send("This command doesn't take any arguments!");
-        return 1;
+function checkNull(message, element) {
+    if(element == null) return true;
+    message.channel.send("This command has invalid arguments. Please use !help for more information.");
+    return false;
+}
+
+function checkNonMentions(message, args, start) {
+    let i;
+    let mentions = message.mentions.users;
+    for (i = start; i < args.length; i++) {
+        if (mentions.find(element => element == args[i]) == null) {
+            message.channel.send("This command has invalid arguments. Please use !help for more information.");
+            return false;
+        }
     }
-    return 0;
+    return true;
 }
 
 function getUsername(args, start) {
@@ -24,10 +35,7 @@ function getUsername(args, start) {
 
 
 function verifyAdmin(message) {
-    if (message.member.roles.some(role => role.hasPermission("ADMINISTRATOR"))) {
-        return true;
-    }
-    message.channel.send("You are not an admin!");
+    if (message.member.roles.some(role => role.hasPermission("ADMINISTRATOR"))) return true;
     return false;
 }
 
@@ -68,8 +76,7 @@ function setDMPref(userId, pref) {
 }
 
 
-function stringifyNumber(number)
-{
+function stringifyNumber(number) {
 
     let i;
     let count = 0;
@@ -95,45 +102,45 @@ function stringifyNumber(number)
 
 }
 
-function generateTimeString(timeArray){
+function generateTimeString(timeArray) {
 
     let years = timeArray[0];
     let months = timeArray[1];
     let days = timeArray[2];
-    let hours  = timeArray[3];
+    let hours = timeArray[3];
     let minutes = timeArray[4];
     let seconds = timeArray[5];
 
     let timeAsString = years + " years, " + months + " months, " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
 
-    if(years == 0){
+    if (years == 0) {
         timeAsString = timeAsString.replace("0 years, ", "");
-    }else if(years == 1){
+    } else if (years == 1) {
         timeAsString = timeAsString.replace("years", "year");
     }
-    if(months == 0){
+    if (months == 0) {
         timeAsString = timeAsString.replace("0 months, ", "");
-    }else if(months == 1){
+    } else if (months == 1) {
         timeAsString = timeAsString.replace("months", "month");
     }
-    if(days == 0){
+    if (days == 0) {
         timeAsString = timeAsString.replace("0 days, ", "");
-    }else if(days == 1){
+    } else if (days == 1) {
         timeAsString = timeAsString.replace("days", "day");
     }
-    if(hours == 0){
+    if (hours == 0) {
         timeAsString = timeAsString.replace("0 hours, ", "");
-    }else if(hours == 1){
+    } else if (hours == 1) {
         timeAsString = timeAsString.replace("hours", "hour");
     }
-    if(minutes == 0){
+    if (minutes == 0) {
         timeAsString = timeAsString.replace("0 minutes, ", "");
-    }else if(minutes == 1){
+    } else if (minutes == 1) {
         timeAsString = timeAsString.replace("minutes", "minute");
     }
-    if(seconds == 0){
+    if (seconds == 0) {
         timeAsString = timeAsString.replace(", 0 seconds", "");
-    }else if(seconds == 1){
+    } else if (seconds == 1) {
         timeAsString = timeAsString.replace("seconds", "second");
     }
 
@@ -141,10 +148,40 @@ function generateTimeString(timeArray){
 
 }
 
+function getCommands() {
+
+    let requests = markdown.bold("requests:") + "\n!requests\n" + "Links a document to request additions to the bot.\n\n";
+    let osu = markdown.bold("osu:") + "\n!osu [command]\n" + "Obtains information from the osu api. Use !osu help for more information.\n\n";
+    let age = markdown.bold("age:") + "\n!age <mentions>\n" + "Shows how long since the creation of the discord account of mentions. If no mentions, defaults to the server where the message was sent.\n\n";
+    let uptime = markdown.bold("uptime:") + "\n!uptime\n" + "Displays how long the bot has been online for.\n\n";
+    let roll = markdown.bold("roll:") + "\n!roll <limit>\n" + "Rolls a number between 0 and limit. Limit must be a number. If no limit, defaults to 100.\n\n";
+    let gay = markdown.bold("gay:") + "\n!gay <mentions>\n" + "DMs the mentions, maximum mentions is 5. If no mentions, random user is selected.\n\n";
+    let p = markdown.bold("p:") + "\n!p [thing1] [thing2]\n" + "Generates a random % between 0 and 100 'p' and replies 'thing2 is p% thing1'\n\n";
+    return requests + osu + age + uptime + roll + p + gay;
+}
+
+function getAdminCommands(){
+
+    let purge = markdown.bold("purge:") + "\n!purge [x]\n" + "Deletes x amount of messages from the channel where the command was sent.\n\n";
+    return purge;
+
+}
+
+function getKey(){
+    let or = "| : or\n";
+    let optional = "<> : optional\n";
+    let mandatory = "[] : mandatory\n";
+    return or + optional + mandatory;
+}
+
 exports.getUsername = getUsername;
 exports.getDMPref = getDMPref;
 exports.setDMPref = setDMPref;
-exports.checkArguments = checkArguments;
+exports.checkNull = checkNull;
+exports.checkNonMentions = checkNonMentions;
 exports.stringifyNumber = stringifyNumber;
 exports.verifyAdmin = verifyAdmin;
 exports.generateTimeString = generateTimeString;
+exports.getCommands = getCommands;
+exports.getAdminCommands = getAdminCommands;
+exports.getKey = getKey;

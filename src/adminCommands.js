@@ -1,3 +1,5 @@
+const bot = require(".././bot.js");
+const helpers = require("./helpers.js");
 
 function purge(message, qty) {
     let messages = message.channel.messages.array();
@@ -15,10 +17,8 @@ function purge(message, qty) {
         return;
     }
     if (qty >= len) {
-        messages.forEach(msg => msg.delete()
-        )
-        ;
-        message.channel.send("A total of " + (len - 1).toString() + " messages were deleted.");
+        messages.forEach(msg => msg.delete());
+        message.channel.send("A total of " + (len - 1).toString() + " messages will be deleted.");
         return;
     }
     qty++;
@@ -29,7 +29,24 @@ function purge(message, qty) {
         messages.pop();
         totalDeleted++;
     }
-    message.channel.send("A total of " + totalDeleted.toString() + " messages were deleted.");
+    message.channel.send("A total of " + totalDeleted.toString() + " messages will be deleted.");
 }
 
+
+function help(message) {
+    let embed = new bot.discord.RichEmbed();
+    embed.setTitle("Amadeus Admin Help");
+    embed.setDescription("Here is a list of commands only available to admins.");
+    embed.setColor(13977185);
+    embed.setThumbnail(bot.client.user.displayAvatarURL);
+    embed.addField("Key", helpers.getKey());
+    embed.addField("Commands", helpers.getAdminCommands());
+    embed.setFooter("Created by " + bot.owner.user.tag, bot.owner.user.displayAvatarURL);
+    embed.setTimestamp(bot.client.user.createdAt);
+    message.author.send(embed);
+
+}
+
+
 exports.purge = purge;
+exports.help = help;
