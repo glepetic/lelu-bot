@@ -71,7 +71,7 @@ function executeCommand(message, args) {
                 return;
             }
             if(!helpers.checkNull(message, args[2])) break;
-            giphy.kiss(message, kissed);
+            giphy.kiss(message);
             break;
         case "hug" :
             let hugged = args[1];
@@ -80,7 +80,7 @@ function executeCommand(message, args) {
                 return;
             }
             if(!helpers.checkNull(message, args[2])) break;
-            giphy.hug(message, hugged);
+            giphy.hug(message);
     }
 }
 

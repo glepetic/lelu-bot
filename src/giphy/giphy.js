@@ -29,29 +29,29 @@ function sendGiphyEmbed(message, word, limit, user){
 
 }
 
-function kiss(message, kissed){
+function kiss(message){
 
     let mentioned = message.mentions.users.first();
 
-    if(mentioned != kissed){
+    if(mentioned == null){
         message.channel.send("This command has invalid arguments. Please use !help for more information.");
         return;
     }
 
-    sendGiphyEmbed(message, "kiss", 25, mentioned);
+    sendGiphyEmbed(message, "anime kiss", 25, mentioned);
 
 }
 
-function hug(message, hugged){
+function hug(message){
 
     let mentioned = message.mentions.users.first();
 
-    if(mentioned != hugged){
+    if(mentioned == null){
         message.channel.send("This command has invalid arguments. Please use !help for more information.");
         return;
     }
 
-    sendGiphyEmbed(message, "hug", 25, mentioned);
+    sendGiphyEmbed(message, "anime hug", 25, mentioned);
 
 }
 

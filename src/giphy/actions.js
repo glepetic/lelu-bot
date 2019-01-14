@@ -2,9 +2,9 @@ function getActions(word){
 
     switch(word){
 
-        case "kiss":
+        case "anime kiss":
             return "kissed";
-        case "hug":
+        case "anime hug":
             return "hugged"
 
     }
