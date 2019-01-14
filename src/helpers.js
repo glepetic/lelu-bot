@@ -9,9 +9,8 @@ function checkNull(message, element) {
 
 function checkNonMentions(message, args, start) {
     let i;
-    let mentions = message.mentions.users;
     for (i = start; i < args.length; i++) {
-        if (mentions.find(element => element == args[i]) == null) {
+        if (!(args[i].toString().includes("@"))) {
             message.channel.send("This command has invalid arguments. Please use !help for more information.");
             return false;
         }
