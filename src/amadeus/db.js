@@ -55,6 +55,7 @@ function register(message, discordID, newUser, valueToUpdate) {
                     }
                     console.log(result);
                     message.channel.send("Done!");
+                    dbInstance.close();
                 });
             } else {
 
@@ -65,6 +66,7 @@ function register(message, discordID, newUser, valueToUpdate) {
                     }
                     console.log(result);
                     message.channel.send("Done!");
+                    dbInstance.close();
                 });
 
             }

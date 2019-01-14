@@ -25,11 +25,10 @@ function executeCommand(message, args) {
         case "dm" :
             let flag = args[1];
             if (flag == null) {
-                message.channel.send("Please follow template: !dm <enable|disable>");
+                message.channel.send("Please follow template: !dm [enable|disable]");
                 break;
             }
-            message.channel.send("WIP");
-        // regularCommands.dm(message, args[1]);
+            regularCommands.dm(message, flag);
         case "osu" :
             args.shift();
             regularCommands.osu(message, args);

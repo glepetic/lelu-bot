@@ -3,7 +3,8 @@ const osuCommands = require("./osu/osuCommands.js");
 const markdown = require("./discord/markdown.js");
 const helpers = require("./helpers.js");
 const math = require("./math.js");
-const osuDB = require("./amadeus/osuDB.js");
+const osuDB = require("./amadeus/osu.js");
+const dmDB = require("./amadeus/dm.js");
 
 
 function requests(message) {
@@ -37,16 +38,7 @@ function gay(message) {
         while (randUser.bot) {
             randUser = message.channel.members.random().user;
         }
-        // let dmPref = helpers.getDMPref(randUser.id);
-        let msg;
-        // if(dmPref){
-        if (true) {
-            randUser.send("You are ultra gay");
-            msg = "Told **" + randUser.username + "** how gay they are";
-        } else {
-            msg = "**" + randUser.username + "** has direct messages disabled."
-        }
-        message.channel.send(msg);
+        dmDB.sendDM(message, randUser, "You are ultra gay :)", "Told " + markdown.bold(randUser.username) + " how gay they are.");
         return;
     }
     if (usersToPm.array().length > 4) {
@@ -54,30 +46,29 @@ function gay(message) {
         return;
     }
 
-    // let nonBots = usersToPm.filter(u => !u.bot);
-    // let enabledDMsUsers = nonBots.filter(u => helpers.getDMPref(u));
     let enabledDMsUsers = usersToPm;
 
     enabledDMsUsers.forEach(user => {
-        if (!user.bot) user.send("You are ultra gay");
+        if (!user.bot) dmDB.sendDM(message, user, "You are ultra gay :)", null);
     });
-
-    message.channel.send("They indeed are.");
 
 }
 
 function dm(message, flag) {
-    let userId = message.author.id;
+    let preference;
     switch (flag) {
-        case "switch" :
-            let dmPref = helpers.getDMPref(userId);
-            helpers.setDMPref(!dmPref);
+        case "enable" :
+            preference = true;
+            break;
+        case "disable" :
+            preference = false;
             break;
         default :
             message.channel.send("Please follow template: !dm <enable|disable>");
-            break;
+            return;
     }
 
+    dmDB.registerDMPreference(message, preference);
 
 }
 

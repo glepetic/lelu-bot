@@ -4,7 +4,7 @@ const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
 const dbLib = require("../amadeus/db.js");
-const osuDB = require(".././amadeus/osuDB.js");
+const osuDB = require("../amadeus/osu.js");
 const markdown = require("../discord/markdown.js");
 const math = require(".././math.js");
 
