@@ -2,7 +2,7 @@ const bot = require(".././bot.js");
 const adminCommands = require("./adminCommands.js");
 const regularCommands = require("./regularCommands.js");
 const helpers = require("./helpers.js");
-const giphy = require("./giphy/giphy.js");
+const localGif = require("./gifs/local.js");
 
 
 function executeCommand(message, args) {
@@ -71,7 +71,7 @@ function executeCommand(message, args) {
                 return;
             }
             if(!helpers.checkNull(message, args[2])) break;
-            giphy.kiss(message);
+            localGif.kiss(message);
             break;
         case "hug" :
             let hugged = args[1];
@@ -80,7 +80,25 @@ function executeCommand(message, args) {
                 return;
             }
             if(!helpers.checkNull(message, args[2])) break;
-            giphy.hug(message);
+            localGif.hug(message);
+        case "lick" :
+            let licked = args[1];
+            if(licked == null){
+                message.channel.send("Lick this.");
+                return;
+            }
+            if(!helpers.checkNull(message, args[2])) break;
+            localGif.lick(message);
+            break;
+        case "slap" :
+            let slapped = args[1];
+            if(slapped == null){
+                message.channel.send("I'LL SLAP YOU");
+                return;
+            }
+            if(!helpers.checkNull(message, args[2])) break;
+            localGif.slap(message);
+            break;
     }
 }
 

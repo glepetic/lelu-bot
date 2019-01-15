@@ -45,6 +45,7 @@ bot.client.on('ready', () => {
     exports.owner = guildOwners.find(owner => owner.id == new Big("500036526546223106"));
 
     console.log('Your Bot is Online')
+
 });
 
 

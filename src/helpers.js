@@ -121,9 +121,8 @@ function getCommands() {
     let roll = markdown.bold("roll:") + "\n!roll <limit>\n" + "Rolls a number between 0 and limit. Limit must be a number. If no limit, defaults to 100.\n\n";
     let gay = markdown.bold("gay:") + "\n!gay <mentions>\n" + "DMs the mentions, maximum mentions is 5. If no mentions, random user is selected.\n\n";
     let p = markdown.bold("p:") + "\n!p [thing1] [thing2]\n" + "Generates a random % between 0 and 100 'p' and replies 'thing2 is p% thing1'\n\n";
-    let kiss = markdown.bold("kiss:") + "\n!kiss [mention]\n" + "Sends a GIF of a kiss to the person mentioned.\n\n";
-    let hug = markdown.bold("hug:") + "\n!hug [mention]\n" + "Sends a GIF of a hug to the person mentioned.\n\n";
-    return requests + dm + osu + age + uptime + roll + p + gay + kiss + hug;
+    let gif = markdown.bold("gif:") + "\n!kiss | !hug | !lick | !slap [mention]\n" + "Sends a GIF o the category chosen to the person mentioned.\n\n";
+    return requests + dm + osu + age + uptime + roll + p + gay + gif;
 }
 
 function getAdminCommands(){
