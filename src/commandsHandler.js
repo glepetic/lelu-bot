@@ -81,6 +81,7 @@ function executeCommand(message, args) {
             }
             if(!helpers.checkNull(message, args[2])) break;
             localGif.hug(message);
+			break;
         case "lick" :
             let licked = args[1];
             if(licked == null){
