@@ -20,21 +20,37 @@ function decToBinary(decimalNumber) {
 
 function secondsToTimeArray(timeInSeconds){
 
+    console.log("timeInSeconds: " + timeInSeconds);
     let minutesAndSeconds = timeInSeconds/60;
+    console.log("minutesAndSeconds: " + minutesAndSeconds);
     let timeInMinutesMinusSeconds = parseInt(minutesAndSeconds);
+    console.log("timeInMinutesMinusSeconds: " + timeInMinutesMinusSeconds);
     let seconds = Math.round((minutesAndSeconds - timeInMinutesMinusSeconds)*60);
+    console.log("seconds: " + seconds);
     let hoursAndMinutes = timeInMinutesMinusSeconds/60;
+    console.log("hoursAndMinutes: " + hoursAndMinutes);
     let timeInHoursMinusMinutes = parseInt(hoursAndMinutes);
-    let minutes = parseInt((hoursAndMinutes - timeInHoursMinusMinutes)*60);
+    console.log("timeInHoursMinusMinutes: " + timeInHoursMinusMinutes);
+    let minutes = Math.round((hoursAndMinutes - timeInHoursMinusMinutes)*60);
+    console.log("minutes: " + minutes);
     let daysAndHours = timeInHoursMinusMinutes/24;
+    console.log("daysAndHours: " + daysAndHours);
     let timeInDaysMinusHours = parseInt(daysAndHours);
-    let hours = parseInt((daysAndHours - timeInDaysMinusHours)*24);
+    console.log("timeInDaysMinusHours: " + timeInDaysMinusHours);
+    let hours = Math.round((daysAndHours - timeInDaysMinusHours)*24);
+    console.log("hours: " + hours);
     let monthsAndDays = (timeInDaysMinusHours*12)/365.25;
+    console.log("monthsAndDays: " + monthsAndDays);
     let timeInMonthsMinusDays = parseInt(monthsAndDays);
+    console.log("timInMonthsMinusDays: " + timeInMonthsMinusDays);
     let days = parseInt(((monthsAndDays - timeInMonthsMinusDays)*365.25)/12);
+    console.log("days: " + days);
     let yearsAndMonths = timeInMonthsMinusDays/12;
-    let years = parseInt(yearsAndMonths);
-    let months = parseInt((yearsAndMonths - years)*12);
+    console.log("yearsAndMonths: " + yearsAndMonths);
+    let years = Math.round(yearsAndMonths);
+    console.log("years: " + years);
+    let months = Math.round((yearsAndMonths - years)*12);
+    console.log("months: " + months);
 
     return [years, months, days, hours, minutes, seconds];
 
@@ -42,7 +58,6 @@ function secondsToTimeArray(timeInSeconds){
 
 function secondsSinceDate(date) {
     let now = new Date();
-    //now.setHours(now.getHours() + 3);
     let d = new Date(date);
 
     let timeDiff = Math.abs(now.getTime() - d.getTime());

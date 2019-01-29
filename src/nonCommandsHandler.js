@@ -49,6 +49,10 @@ function replyToMessage(message) {
         message.react(reaction);
     }
 
+    if (content.includes("hype")){
+        message.channel.send("<a:gaydancesb:539815915618041887>");
+    }
+
 }
 
 exports.replyToMessage = replyToMessage;
