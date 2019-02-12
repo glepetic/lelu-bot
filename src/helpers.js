@@ -139,6 +139,11 @@ function getKey(){
     return or + optional + mandatory;
 }
 
+function deleteMsg(message){
+    message.delete();
+    message.channel.messages.array().pop();
+}
+
 exports.getUsername = getUsername;
 exports.checkNull = checkNull;
 exports.checkNonMentions = checkNonMentions;
@@ -148,3 +153,4 @@ exports.generateTimeString = generateTimeString;
 exports.getCommands = getCommands;
 exports.getAdminCommands = getAdminCommands;
 exports.getKey = getKey;
+exports.deleteMsg = deleteMsg;

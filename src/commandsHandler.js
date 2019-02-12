@@ -3,9 +3,11 @@ const adminCommands = require("./adminCommands.js");
 const regularCommands = require("./regularCommands.js");
 const helpers = require("./helpers.js");
 const localGif = require("./gifs/local.js");
+const math = require("./math.js");
 
 
 function executeCommand(message, args) {
+    let text;
     let cmd = args[0];
     switch (cmd) {
         case "requests" :
@@ -44,13 +46,23 @@ function executeCommand(message, args) {
             regularCommands.age(message);
             break;
         case "p" :
-            let text = args[1];
+            text = args[1];
             let user = helpers.getUsername(args, 2);
             if (text == null || user == null) {
                 message.channel.send("Please follow template: !p <text> <user>");
                 break;
             }
             regularCommands.p(message, text, user);
+            break;
+        case  "say" :
+            if(args[1] == null){
+                helpers.deleteMsg(message);
+                message.channel.send("ʎɐs¡");
+                break;
+            }
+            args.shift();
+            text = args.join(' ');
+            regularCommands.say(message, text);
             break;
         case "help" :
             if(!helpers.checkNull(message, args[1])) break;

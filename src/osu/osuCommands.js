@@ -36,7 +36,7 @@ function recent(message, user) {
 
             await osuApi.getUserRecent(user,
                 function (err, recentScores) {
-                    if (recentScores[0] == null) {
+                    if (recentScores == null || recentScores[0] == null) {
                         message.channel.send("This player has not played in the last 24 hours.");
                         return;
                     }
@@ -139,6 +139,11 @@ function best(message, user) {
                 function (err, bestScores) {
 
                     bestScore = bestScores[0];
+
+                    if (bestScores == null || bestScore == null) {
+                        message.channel.send("This player does not have a best score set.");
+                        return;
+                    }
 
                     osuApi.getBeatmap(bestScore["beatmap_id"],
                         function (err, beatMap) {

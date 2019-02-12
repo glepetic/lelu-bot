@@ -203,6 +203,13 @@ function roll(message, limit) {
 }
 
 
+function say(message, text){
+    if(message.mentions.users.first() != null) text = "Don't be annoying 👀";
+    helpers.deleteMsg(message);
+    message.channel.send(text);
+}
+
+
 exports.requests = requests;
 exports.worms = worms;
 exports.gay = gay;
@@ -213,3 +220,4 @@ exports.dm = dm;
 exports.help = help;
 exports.uptime = uptime;
 exports.roll = roll;
+exports.say = say;
