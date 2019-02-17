@@ -19,9 +19,9 @@ function determinateRank(rank) {
         case "S" :
             return "<:rankingSsmall:546508424792375297>";
         case "X" :
-            return "<:rankingXsmall:546508869371953163>";
+            return "<:rankingXsmall:546508937088860171>";
         case "SH" :
-            return "<:rankingSHsmall:546508937088860171>";
+            return "<:rankingSHsmall:546508869371953163>";
         case "XH" :
             return "<:rankingXHsmall:546508970517331969>";
 
