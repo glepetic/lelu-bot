@@ -7,23 +7,23 @@ const markdown = require("../discord/markdown.js");
 function determinateRank(rank) {
     switch (rank) {
         case "A" :
-            return "<:rankingAsmall:527695142493356052>";
+            return "<:rankingAsmall:546508668200550400>";
         case "B" :
-            return "<:rankingBsmall:527695161149620225>";
+            return "<:rankingBsmall:546508724559151118>";
         case "C" :
-            return "<:rankingCsmall:527695172172251137>";
+            return "<:rankingCsmall:546508754628378645>";
         case "D" :
-            return "<:rankingDsmall:527695181642989599>";
+            return "<:rankingDsmall:546508819400753155>";
         case "F" :
             return "<:rankingFsmall:527660248127897610>";
         case "S" :
-            return "<:rankingSsmall:527695206380994560>";
+            return "<:rankingSsmall:546508424792375297>";
         case "X" :
-            return "<:rankingXsmall:527695239561871370>";
+            return "<:rankingXsmall:546508869371953163>";
         case "SH" :
-            return "<:rankingSHsmall:527695193764265995>";
+            return "<:rankingSHsmall:546508937088860171>";
         case "XH" :
-            return "<:rankingXHsmall:527695215964848159>";
+            return "<:rankingXHsmall:546508970517331969>";
 
     }
 }
