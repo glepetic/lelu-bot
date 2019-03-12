@@ -42,7 +42,7 @@ bot.client.on('ready', () => {
     bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
 
     let guildOwners = bot.client.guilds.map(guild => guild.owner);
-    exports.owner = guildOwners.find(owner => owner.id == new Big("500036526546223106"));
+    exports.owner = guildOwners.find(owner => owner.id == new Big(config.ownerID));
 
     console.log('Your Bot is Online')
 
