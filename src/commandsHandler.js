@@ -38,11 +38,11 @@ function executeCommand(message, args) {
             args.unshift("osu");
             break;
         case "uptime" :
-            if(!helpers.checkNull(message, args[1])) break;
+            if (!helpers.checkNull(message, args[1])) break;
             regularCommands.uptime(message);
             break;
         case "age" :
-            if(!helpers.checkNonMentions(message, args, 1)) break;
+            if (!helpers.checkNonMentions(message, args, 1)) break;
             regularCommands.age(message);
             break;
         case "p" :
@@ -55,7 +55,7 @@ function executeCommand(message, args) {
             regularCommands.p(message, text, user);
             break;
         case  "say" :
-            if(args[1] == null){
+            if (args[1] == null) {
                 helpers.deleteMsg(message);
                 message.channel.send("ʎɐs¡");
                 break;
@@ -65,7 +65,7 @@ function executeCommand(message, args) {
             regularCommands.say(message, text);
             break;
         case "help" :
-            if(!helpers.checkNull(message, args[1])) break;
+            if (!helpers.checkNull(message, args[1])) break;
             regularCommands.help(message);
             break;
         case "gnome" :
@@ -73,44 +73,20 @@ function executeCommand(message, args) {
             break;
         case "roll" :
             let limit = args[1];
-            if(!helpers.checkNull(message, args[2])) break;
+            if (!helpers.checkNull(message, args[2])) break;
             regularCommands.roll(message, limit);
             break;
         case "kiss" :
-            let kissed = args[1];
-            if(kissed == null){
-                message.channel.send("Looks like you have no one to kiss, heh, sad life.");
-                return;
-            }
-            if(!helpers.checkNull(message, args[2])) break;
-            localGif.kiss(message);
+            helpers.reactWithGif(args, message, "Looks like you have no one to kiss, heh, sad life.", localGif.kiss)
             break;
         case "hug" :
-            let hugged = args[1];
-            if(hugged == null){
-                message.channel.send("Looks like you have no one to hug, heh, sad life.");
-                return;
-            }
-            if(!helpers.checkNull(message, args[2])) break;
-            localGif.hug(message);
-			break;
+            helpers.reactWithGif(args, message, "Looks like you have no one to hug, heh, sad life.", localGif.hug)
+            break;
         case "lick" :
-            let licked = args[1];
-            if(licked == null){
-                message.channel.send("Lick this.");
-                return;
-            }
-            if(!helpers.checkNull(message, args[2])) break;
-            localGif.lick(message);
+            helpers.reactWithGif(args, message, "Lick this.", localGif.lick)
             break;
         case "slap" :
-            let slapped = args[1];
-            if(slapped == null){
-                message.channel.send("I'LL SLAP YOU");
-                return;
-            }
-            if(!helpers.checkNull(message, args[2])) break;
-            localGif.slap(message);
+            helpers.reactWithGif(args, message, "I'LL SLAP YOU", localGif.slap)
             break;
     }
 }
@@ -124,7 +100,7 @@ function executeAdminCommand(message, args) {
             adminCommands.purge(message, qty);
             break;
         case "help":
-            if(!helpers.verifyAdmin(message) || args[1] != null){
+            if (!helpers.verifyAdmin(message) || args[1] != null) {
                 break;
             }
             adminCommands.help(message);
@@ -132,6 +108,7 @@ function executeAdminCommand(message, args) {
             break;
     }
 }
+
 
 exports.executeCommand = executeCommand;
 exports.executeAdminCommand = executeAdminCommand;
