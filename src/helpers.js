@@ -68,8 +68,10 @@ function getKey(){
 }
 
 function deleteMsg(message){
-    message.delete();
-    message.channel.messages.array().pop();
+    if(message.channel.type === "text"){
+        message.delete();
+        message.channel.messages.array().pop();
+    }
 }
 
 function reactWithGif(commandArgs, message, msgReply, gifReaction){
