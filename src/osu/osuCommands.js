@@ -3,7 +3,7 @@ const osuApi = bot.osuApi;
 const osuMath = require("./math.js");
 const osuHelpers = require("./helpers.js");
 const helpers = require(".././helpers.js");
-const dbLib = require("../amadeus/db.js");
+const stringHandler = require(".././services/stringHandler");
 const osuDB = require("../amadeus/osu.js");
 const markdown = require("../discord/markdown.js");
 const math = require(".././math.js");
@@ -69,7 +69,7 @@ function recent(message, user) {
 
                                 let secondsSincePlay = math.secondsSinceDate(lastScore.date);
                                 let timeSincePlay = math.secondsToTimeArray(secondsSincePlay);
-                                let timeSincePlayString = helpers.generateTimeString(timeSincePlay);
+                                let timeSincePlayString = stringHandler.generateTimeString(timeSincePlay);
 
                                 osuApi.getScores(lastScore["beatmap_id"], user,
                                     function (err, bmpScores) {
@@ -85,7 +85,7 @@ function recent(message, user) {
                                             "[" + username + "](https://osu.ppy.sh/users/" + lastScore["user_id"] + ")", url,
                                             beatMap.title, beatMap.version, splitID[0], osuHelpers.determinateRank(lastScore.rank), ppGain,
                                             Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%",
-                                            helpers.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")",
+                                            stringHandler.stringifyNumber(lastScore.score) + " (x" + maxCombo + ")",
                                             lastScore.date, Math.round(beatMap["difficultyrating"] * 100) / 100 + "★",
                                             osuHelpers.generateModsString(usedMods), count300s, count100s, count50s, countmiss, countGeki, countKatu,
                                             timeSincePlayString + " ago");
@@ -171,14 +171,14 @@ function best(message, user) {
 
                                 let secondsSincePlay = math.secondsSinceDate(bestScore.date);
                                 let timeSincePlay = math.secondsToTimeArray(secondsSincePlay);
-                                let timeSincePlayString = helpers.generateTimeString(timeSincePlay);
+                                let timeSincePlayString = stringHandler.generateTimeString(timeSincePlay);
 
                                 let embed = osuHelpers.generatePlayEmbed(
                                     "[" + username + "](https://osu.ppy.sh/users/" + bestScore["user_id"] + ")", url,
                                     beatMap.title, beatMap.version, splitID[0],
                                     osuHelpers.determinateRank(bestScore.rank), " +" + Math.round(bestScore.pp) + "pp",
                                     Math.round(osuMath.calculateAccuracy(count50s, count100s, count300s, countmiss) * 100) / 100 + "%",
-                                    helpers.stringifyNumber(bestScore.score) + " (x" + maxCombo + ")",
+                                    stringHandler.stringifyNumber(bestScore.score) + " (x" + maxCombo + ")",
                                     bestScore.date, Math.round(beatMap["difficultyrating"] * 100) / 100 + "★",
                                     osuHelpers.generateModsString(usedMods),
                                     count300s, count100s, count50s, countmiss, countGeki, countKatu,
@@ -207,7 +207,7 @@ function wasted(message, user) {
             let secondsPlayed = userJSON["total_seconds_played"];
 
             let timeWasted = math.secondsToTimeArray(secondsPlayed);
-            let timeWastedString = helpers.generateTimeString(timeWasted);
+            let timeWastedString = stringHandler.generateTimeString(timeWasted);
 
             message.channel.send(markdown.bold(username) + " has wasted " + timeWastedString + " playing osu!");
 

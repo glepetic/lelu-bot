@@ -1,3 +1,4 @@
+const stringHandler = require("./services/stringHandler");
 const bot = require(".././bot.js");
 const osuCommands = require("./osu/osuCommands.js");
 const markdown = require("./discord/markdown.js");
@@ -134,7 +135,7 @@ function age(message) {
         }
 
         time = math.secondsToTimeArray(seconds);
-        age = helpers.generateTimeString(time);
+        age = stringHandler.generateTimeString(time);
 
         reply = reply + "was created " + age + " ago";
 
@@ -152,7 +153,7 @@ function age(message) {
             }
 
             time = math.secondsToTimeArray(seconds);
-            age = helpers.generateTimeString(time);
+            age = stringHandler.generateTimeString(time);
 
             reply = reply + "was created " + age + " ago";
 
@@ -187,7 +188,7 @@ function help(message) {
 function uptime(message) {
     let seconds = math.secondsSinceDate(bot.startTime);
     let time = math.secondsToTimeArray(seconds);
-    let uptime = helpers.generateTimeString(time);
+    let uptime = stringHandler.generateTimeString(time);
     message.channel.send("I have been online for " + uptime);
 }
 
