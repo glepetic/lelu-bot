@@ -31,15 +31,19 @@ const markdown = require("./src/discord/markdown.js");
 // Set the prefix
 const prefix = config.prefix;
 
-let gameMessage;
+function getBotServers(){
+    return bot.client.guilds.array().length;
+}
+
+function getGameMessage(){
+    return "on " + getBotServers()  + " servers"
+}
 
 bot.client.on('ready', () => {
 
-    gameMessage = "on " + bot.client.guilds.array().length + " servers";
-
     // set status
     bot.client.user.setStatus(config.presence); // Change from settings/config.json
-    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    bot.client.user.setActivity(getGameMessage());
 
     let guildOwners = bot.client.guilds.map(guild => guild.owner);
     exports.owner = guildOwners.find(owner => owner.id == new Big("500036526546223106"));
@@ -50,14 +54,14 @@ bot.client.on('ready', () => {
 
 
 bot.client.on("guildCreate", guild => {
-    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    bot.client.user.setActivity(getGameMessage());
     let defaultChannel = guild.channels.filter(channel => channel.type === "text").first();
     defaultChannel.send("Hello! Thanks for inviting me <a:wobblesb:528743238035570710>");
     defaultChannel.send("Use !help if you need command information.");
 });
 
 bot.client.on("guildDelete", (guild) => {
-    bot.client.user.setActivity("on " + bot.client.guilds.array().length + " servers");
+    bot.client.user.setActivity(getGameMessage());
 });
 
 bot.client.on("guildMemberAdd", member =>{
