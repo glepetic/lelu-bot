@@ -5,10 +5,10 @@ const Big = require("big.js");
 const mongo = require("mongoose");
 const mongoLong = require("mongodb").Long;
 require("mongoose-long")(mongo);
-const giphy = require("giphy-api")("eorufO1ywQLZqjiHbk2vpBcw95hYAsDx");
+const giphy = require("giphy-api")(process.env.GIPHY_API_TOKEN);
 
 
-exports.osuApi = new osu.Api("3154dc707474e9590e5cd57c6b3de1f6e5e1a0f3");
+exports.osuApi = new osu.Api(process.env.OSU_API_TOKEN);
 exports.startTime = new Date();
 exports.mongoose = mongo;
 exports.Long = mongoLong;
@@ -29,7 +29,7 @@ const nonCommandsHandler = require("./src/nonCommandsHandler.js");
 const markdown = require("./src/discord/markdown.js");
 
 // Set the prefix
-const prefix = config.prefix;
+const prefix = process.env.DISCORD_BOT_COMMAND_PREFIX;
 
 function getBotServers(){
     return bot.client.guilds.array().length;
@@ -45,8 +45,8 @@ bot.client.on('ready', () => {
     bot.client.user.setStatus(config.presence); // Change from settings/config.json
     bot.client.user.setActivity(getGameMessage());
 
-    let guildOwners = bot.client.guilds.map(guild => guild.owner);
-    exports.owner = guildOwners.find(owner => owner.id == new Big(config.ownerID));
+    let guildOwners = bot.client.guilds.map(guild => guild.ownerID);
+    exports.owner = guildOwners.find(ownerID => ownerID == new Big(config.ownerID));
 
     console.log('Your Bot is Online')
 
@@ -56,7 +56,7 @@ bot.client.on('ready', () => {
 bot.client.on("guildCreate", guild => {
     bot.client.user.setActivity(getGameMessage());
     let defaultChannel = guild.channels.filter(channel => channel.type === "text").first();
-    defaultChannel.send("Hello! Thanks for inviting me <a:wobblesb:528743238035570710>");
+    defaultChannel.send("Hello! Thanks for inviting me :)");
     defaultChannel.send("Use !help if you need command information.");
 });
 
@@ -93,4 +93,4 @@ bot.client.on("message", (message) => {
 
 
 //Login to your bot edit the config file on settings folder
-bot.client.login(config.token);
+bot.client.login(process.env.DISCORD_BOT_TOKEN);

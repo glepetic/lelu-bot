@@ -1,5 +1,5 @@
 const bot = require("../.././bot.js");
-const mongoURL = "mongodb+srv://sucre:Lgo**2019!@sb-v30sa.mongodb.net/Amadeus";
+const mongoURL = process.env.DISCORD_BOT_DATABASE_URI;
 
 let userSchema = new bot.mongoose.Schema({
     _id: bot.mongoose.Schema.Types.Long,
