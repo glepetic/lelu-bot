@@ -7,6 +7,10 @@
   "scripts": {
     "start": "node bot.js"
   },
+  "engines": {
+    "node": "10.19.0"
+  },
+  "engineStrict": true,
   "dependencies": {
     "assert": "^1.4.1",
     "big.js": "^5.2.2",
