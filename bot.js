@@ -31,12 +31,12 @@ const markdown = require("./src/discord/markdown.js");
 // Set the prefix
 const prefix = process.env.DISCORD_BOT_COMMAND_PREFIX;
 
-function getBotServers(){
+function getBotServers() {
     return bot.client.guilds.array().length;
 }
 
-function getGameMessage(){
-    return "on " + getBotServers()  + " servers"
+function getGameMessage() {
+    return "on " + getBotServers() + " servers"
 }
 
 bot.client.on('ready', () => {
@@ -45,8 +45,9 @@ bot.client.on('ready', () => {
     bot.client.user.setStatus(config.presence); // Change from settings/config.json
     bot.client.user.setActivity(getGameMessage());
 
-    let guildOwners = bot.client.guilds.map(guild => guild.ownerID);
-    exports.owner = guildOwners.find(ownerID => ownerID == new Big(config.ownerID));
+    bot.client
+        .fetchUser(config.ownerID)
+        .then(u => exports.owner = u);
 
     console.log('Your Bot is Online')
 
@@ -64,9 +65,9 @@ bot.client.on("guildDelete", (guild) => {
     bot.client.user.setActivity(getGameMessage());
 });
 
-bot.client.on("guildMemberAdd", member =>{
-   let defaultChannel = member.guild.channels.filter(channel => channel.type === "text").first();
-   defaultChannel.send("Some noob called " + markdown.bold(member.displayName) + " has appeared!");
+bot.client.on("guildMemberAdd", member => {
+    let defaultChannel = member.guild.channels.filter(channel => channel.type === "text").first();
+    defaultChannel.send("Some noob called " + markdown.bold(member.displayName) + " has appeared!");
 });
 
 bot.client.on("message", (message) => {

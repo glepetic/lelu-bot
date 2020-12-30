@@ -1,8 +1,9 @@
 {
-"presence" : "online",
-"ownerID" : "500036526546223106",
-"activity" : {
-	"name" : "weeb music",
-	"type" : "LISTENING"
-	}
+  "presence": "online",
+  "ownerID": "500036526546223106",
+  "bot_server_id": "793470660688216145",
+  "activity": {
+    "name": "weeb music",
+    "type": "LISTENING"
+  }
 }

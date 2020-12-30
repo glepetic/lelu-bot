@@ -41,7 +41,7 @@ function help(message) {
     embed.setThumbnail(bot.client.user.displayAvatarURL);
     embed.addField("Key", helpers.getKey());
     embed.addField("Commands", helpers.getAdminCommands());
-    embed.setFooter("Created by " + bot.owner.user.tag, bot.owner.user.displayAvatarURL);
+    embed.setFooter("Created by " + bot.owner.tag, bot.owner.displayAvatarURL);
     embed.setTimestamp(bot.client.user.createdAt);
     message.author.send(embed);
 
