@@ -92,6 +92,9 @@ bot.client.on("message", (message) => {
 
 });
 
-
+const bot_token = process.env.DISCORD_BOT_TOKEN;
+console.log(bot_token);
 //Login to your bot edit the config file on settings folder
-bot.client.login(process.env.DISCORD_BOT_TOKEN);
+bot.client.login(bot_token)
+    .then(some => console.log("Logged in!"))
+    .catch(err => console.error(err));
